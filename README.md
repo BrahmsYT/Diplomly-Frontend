@@ -4,13 +4,13 @@ Diplomly platformasının veb interfeysi: public sayt, müdavim paneli və təş
 
 **Stack:** React 18 · Vite · TypeScript · Tailwind CSS · React Router · html2canvas + jsPDF
 
-> Backend ayrı qovluqdadır və ayrı işə salınır: [`../backend`](../backend)
+> Backend ayrı repo-dadır və ayrı işə salınır: [Diplomly-Backend](https://github.com/BrahmsYT/Diplomly-Backend)
 
 ---
 
 ## İşə salma
 
-Backend **əvvəlcədən işə salınmalıdır** (bax [`../backend/README.md`](../backend/README.md)).
+Backend **əvvəlcədən işə salınmalıdır** (bax [Diplomly-Backend README](https://github.com/BrahmsYT/Diplomly-Backend#readme)).
 
 ```bash
 npm install
@@ -25,10 +25,40 @@ Sayt `/api` sorğularını Vite proxy vasitəsilə backend-ə yönləndirir, ona
 
 ## Mühit dəyişənləri (`.env`)
 
-| Dəyişən | Default | Təyinat |
+| Dəyişən | Kim oxuyur | Təyinat |
 |---|---|---|
-| `BACKEND_PORT` | `4001` | Vite proxy-nin hədəf portu. `backend/.env` faylındakı `PORT` ilə **eyni olmalıdır**. |
-| `VITE_API_URL` | boş | Yalnız production build üçün — API-nin tam ünvanı. Development-də boş saxlanılır. |
+| `BACKEND_PORT` | **Vite dev serveri** | Proxy-nin hədəf portu. `backend/.env` faylındakı `PORT` ilə eyni olmalıdır. Brauzerə çatmır, production-da istifadə olunmur. |
+| `VITE_API_URL` | **Brauzer** | Production-da API-nin tam ünvanı. Development-də boş saxlanılır. |
+| `VITE_SAME_ORIGIN` | Vite build | Frontend və backend eyni domendədirsə (reverse proxy) `true` edin — `VITE_API_URL` yoxlaması keçilir. |
+
+### Frontend backend-in ünvanını haradan bilir?
+
+Bu iki dəyişəni qarışdırmaq asandır — mexanizm tam fərqlidir.
+
+**Development:**
+```
+Brauzer  fetch('/api/...')          ← BASE_URL boşdur
+   ↓
+:5173    Vite dev serveri
+   ↓     proxy: '/api' → localhost:4001   ← BACKEND_PORT burada işləyir
+:4001    Backend
+```
+Brauzer backend-in ünvanını bilmir və bilməsinə ehtiyac yoxdur — sorğu öz domenində qalır, CORS problemi yaranmır.
+
+**Production:**
+```
+Brauzer  fetch('https://<servis>.onrender.com/api/...')
+                  ↑ VITE_API_URL build anında bundle-a yazılır
+```
+Vercel-də dev serveri yoxdur, `dist/` sadəcə statik fayllardır — proxy yoxdur, ona görə tam ünvan lazımdır.
+
+Üç nüans:
+
+1. Vite yalnız **`VITE_`** prefiksli dəyişənləri brauzer koduna ötürür — məxfi dəyərlər təsadüfən bundle-a düşməsin deyə.
+2. Dəyər **build anında** yazılır. Vercel-də dəyişdikdən sonra mütləq **Redeploy** edin.
+3. `.env` faylı repo-ya düşmür — Vercel-də dəyər **Settings → Environment Variables** bölməsindən verilir.
+
+Təyin etməyi unutsanız build **dayanacaq** (`vite.config.ts`-dəki yoxlama) — sayt sınıq deploy olunmaqdansa aydın mesajla xəbərdarlıq edir.
 
 ---
 
@@ -77,6 +107,7 @@ frontend/
 | `/certificate/:code` | **Paylaşılan sertifikat səhifəsi** — QR kod bura yönləndirir | 3.6 / 7.8 |
 | `/haqqinda` | Diplomly haqqında | 8 |
 | `/teskilatlar-ucun` | Təşkilatlar üçün | 8 |
+| `/test` | **Demo səhifəsi** — sınaq hesabları + nümunə məlumatların yaradılması | — |
 | `/daxil-ol` | Giriş | — |
 | `/qeydiyyat` | Qeydiyyat növünün seçimi | — |
 | `/qeydiyyat/mudavim` | Müdavim qeydiyyatı | 3.1 |
@@ -210,7 +241,9 @@ html2canvas və jsPDF ayrı chunk-lardadır və yalnız sertifikat yükləndikd�
 
 ## Sınaq hesabları
 
-Backend seed edildikdən sonra (şifrə hamısı üçün `parol123`):
+**`/test`** səhifəsini açın — hesabları göstərir və bir düymə ilə nümunə məlumatları yaradır. Deploy edildikdən sonra baza boş olur, ona görə ilk addım budur.
+
+Şifrə hamısı üçün `parol123`:
 
 | Rol | E-mail | Nə görünür |
 |---|---|---|
@@ -244,9 +277,36 @@ npm run build
 npm run preview     # yoxlamaq üçün
 ```
 
-Production-da Vite proxy **işləmir** — `dist/` statik fayllardır. İki yol var:
+Lokal yoxlamaq üçün dəyişəni əl ilə vermək lazımdır:
 
-1. `.env` faylında `VITE_API_URL=https://api.diplomly.com` təyin edin (backend-də CORS icazəsi lazımdır); və ya
-2. `dist/` qovluğunu backend ilə eyni domendə yerləşdirib `/api` yolunu reverse proxy (nginx) ilə yönləndirin — bu halda `VITE_API_URL` boş qalır.
+```bash
+VITE_API_URL=https://diplomly-backend.onrender.com npm run build
+npm run preview
+```
 
-SPA olduğu üçün server bütün naməlum yolları `index.html`-ə yönləndirməlidir, əks halda `/certificate/DPL-000245` linki birbaşa açıldıqda 404 verər.
+### Vercel-ə deploy
+
+| Sahə | Dəyər |
+|---|---|
+| Framework Preset | `Vite` |
+| Root Directory | Repo kökündə `package.json` varsa boş; monorepo-dursa `frontend` |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+
+**Environment Variables:**
+
+| Key | Value |
+|---|---|
+| `VITE_API_URL` | `https://<servis>.onrender.com` — **sonda `/` olmasın** |
+
+Ən azı **Production** mühiti seçilməlidir.
+
+### Deploy-dan sonra yoxlanılası 3 şey
+
+1. **`/test`** səhifəsini açıb nümunə məlumatları yaradın.
+2. **`/certificate/DPL-000001`** ünvanını **birbaşa brauzerə yazın.** 404 verirsə SPA fallback lazımdır — kök qovluğa `vercel.json` əlavə edin:
+   ```json
+   { "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
+   ```
+   Bu addım vacibdir: bütün QR kodlar məhz belə birbaşa açılan linklərdir.
+3. Backend-də **`CORS_ORIGINS`** və **`FRONTEND_URL`** real Vercel ünvanı ilə yenilənib-yenilənmədiyini yoxlayın.

@@ -12,10 +12,18 @@ import type {
 } from '../types';
 
 /**
- * Vite proxy /api sorğularını backend-ə (localhost:4000) yönləndirir,
- * ona görə burada tam ünvan yazmağa ehtiyac yoxdur (vite.config.ts).
+ * API-nin kök ünvanı.
+ *
+ * Development: boş qalır. Sorğu `/api/...` kimi öz domenimizə gedir və
+ *   Vite dev serveri onu backend-ə yönləndirir (bax vite.config.ts → proxy).
+ *   Backend portu `frontend/.env` faylındakı BACKEND_PORT ilə idarə olunur —
+ *   həmin dəyişən yalnız Vite tərəfindədir, brauzerə çatmır.
+ *
+ * Production: Vercel-də proxy yoxdur, ona görə tam ünvan lazımdır. Dəyər
+ *   `VITE_API_URL` mühit dəyişənindən gəlir və **build anında** bundle-a
+ *   yazılır — dəyişdikdən sonra yenidən deploy etmək lazımdır.
  */
-const BASE_URL = import.meta.env.VITE_API_URL ?? '';
+const BASE_URL = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
 
 const TOKEN_KEY = 'diplomly_token';
 
@@ -194,6 +202,30 @@ export const certificateApi = {
 };
 
 // ---------------- Müdavim ----------------
+
+// ---------------- Test / demo ----------------
+
+export interface SeedStatus {
+  seeded: boolean;
+  counts: { users: number; organizations: number; courses: number; certificates: number };
+  password: string;
+  accounts: Array<{ role: string; email: string; label: string }>;
+}
+
+export interface SeedResult {
+  message: string;
+  organizations: number;
+  courses: number;
+  certificates: number;
+  firstCode: string;
+  lastCode: string;
+  password: string;
+}
+
+export const testApi = {
+  status: () => get<SeedStatus>('/api/test/status'),
+  seed: () => post<SeedResult>('/api/test/seed'),
+};
 
 export const learnerApi = {
   stats: () => get<LearnerStats>('/api/learner/stats'),

@@ -91,10 +91,16 @@ export function Login() {
       </p>
 
       <div className="mt-8 rounded-lg border border-slate-200 bg-slate-50 p-4 text-xs text-slate-500">
-        <p className="mb-1.5 font-medium text-slate-600">Sınaq hesabları (seed məlumatları):</p>
+        <p className="mb-1.5 font-medium text-slate-600">Sınaq hesabları:</p>
         <p>Təşkilat: admin@abcacademy.az</p>
         <p>Müdavim: saleh@example.com</p>
         <p className="mt-1">Şifrə (hər ikisi üçün): parol123</p>
+        <Link
+          to="/test"
+          className="mt-2.5 inline-block font-medium text-brand-600 hover:text-brand-700"
+        >
+          Baza boşdursa → nümunə məlumatları yarat
+        </Link>
       </div>
     </div>
   );

@@ -22,6 +22,7 @@ import { OrgProfile } from './pages/organization/OrgProfile';
 import { Home } from './pages/public/Home';
 import { About, ForOrganizations, NotFound } from './pages/public/Info';
 import { PublicCertificatePage } from './pages/public/PublicCertificate';
+import { TestData } from './pages/public/TestData';
 import { Verify } from './pages/public/Verify';
 
 export default function App() {
@@ -38,6 +39,9 @@ export default function App() {
 
             {/* Bölmə 3.6 — paylaşılan sertifikat linki, QR kod bura yönləndirir */}
             <Route path="certificate/:code" element={<PublicCertificatePage />} />
+
+            {/* Demo: sınaq hesabları + nümunə məlumatların yaradılması */}
+            <Route path="test" element={<TestData />} />
 
             <Route path="daxil-ol" element={<Login />} />
             <Route path="qeydiyyat" element={<RegisterChoice />} />

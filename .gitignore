@@ -4,3 +4,6 @@ dist/
 *.local
 *.log
 .vite/
+
+# TypeScript build artefaktı
+*.tsbuildinfo
