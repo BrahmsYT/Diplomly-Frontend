@@ -75,10 +75,10 @@ export function MyCertificates() {
               key={item.key}
               type="button"
               onClick={() => setFilter(item.key)}
-              className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+              className={`rounded-lg border px-3 py-1.5 text-sm font-medium ${
                 filter === item.key
-                  ? 'bg-brand-600 text-white'
-                  : 'border border-slate-300 bg-white text-slate-600 hover:bg-slate-50'
+                  ? 'border-brand-700 bg-brand-700 text-white'
+                  : 'border-slate-300 bg-white text-slate-600 hover:bg-slate-50'
               }`}
             >
               {item.label}

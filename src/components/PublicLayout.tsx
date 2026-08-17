@@ -1,4 +1,5 @@
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Logo } from './ui';
 
@@ -12,6 +13,16 @@ const NAV = [
 
 export function PublicLayout() {
   const { user } = useAuth();
+  const location = useLocation();
+
+  const navRef = useRef<HTMLElement>(null);
+  const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null);
+
+  // Aktiv linkin altındakı xətt yeni linkə sürüşərək keçir (sərt tullanma yox).
+  useEffect(() => {
+    const active = navRef.current?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (active) setIndicator({ left: active.offsetLeft, width: active.offsetWidth });
+  }, [location.pathname]);
 
   const panelPath = user?.role === 'ORG_OWNER' ? '/teskilat' : '/panel';
 
@@ -19,28 +30,34 @@ export function PublicLayout() {
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2.5">
+          <Link to="/" className="flex items-center gap-1">
             <Logo />
-            <span className="text-lg font-semibold tracking-tight text-slate-900">Diplomly</span>
+            <span className="font-wordmark text-base font-semibold uppercase tracking-wide text-slate-900">
+              Diplomly
+            </span>
           </Link>
 
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav ref={navRef} className="relative hidden items-center gap-1 md:flex">
             {NAV.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 end={item.end}
                 className={({ isActive }) =>
-                  `border-b-2 px-3 py-2 text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'border-brand-700 text-brand-800'
-                      : 'border-transparent text-slate-600 hover:text-slate-900'
+                  `px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive ? 'text-brand-800' : 'text-slate-600 hover:text-slate-900'
                   }`
                 }
               >
                 {item.label}
               </NavLink>
             ))}
+            {indicator && (
+              <span
+                className="absolute bottom-0 h-0.5 bg-brand-700 transition-all duration-300 ease-out"
+                style={{ left: indicator.left, width: indicator.width }}
+              />
+            )}
           </nav>
 
           <div className="flex items-center gap-2">

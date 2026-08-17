@@ -35,6 +35,8 @@ export default {
       fontFamily: {
         sans: ['"Public Sans"', 'system-ui', 'sans-serif'],
         serif: ['"Source Serif 4"', 'Georgia', 'serif'],
+        // Yalnız "Diplomly" wordmark-ı üçün — həkk olunmuş möhür hərfləri.
+        wordmark: ['"Cinzel"', '"Source Serif 4"', 'serif'],
       },
       borderRadius: {
         none: '0',

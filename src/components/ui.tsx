@@ -176,11 +176,11 @@ export function DetailRow({ label, value }: { label: string; value: ReactNode })
 /** Diplomly-nin nişanı: dalğalı kənarlı mum-möhür + lent quyruqları. */
 export function Logo({ className = 'h-8 w-8' }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 32" fill="none" className={`shrink-0 text-brand-700 ${className}`} aria-hidden="true">
+    <svg viewBox="0 0 24 29" fill="none" className={`shrink-0 text-brand-700 ${className}`} aria-hidden="true">
       {/* Lent quyruqları — aşağı endikcə bir-birindən aralanır */}
       <path
         fill="currentColor"
-        d="M9.5 18.5L11.5 18.5L8.5 30.4L7 27.4L5.5 30.4Z M14.5 18.5L12.5 18.5L15.5 30.4L17 27.4L18.5 30.4Z"
+        d="M9.5 18.5L11.5 18.5L8.9 27.6L7.4 25.3L5.9 27.6Z M14.5 18.5L12.5 18.5L15.1 27.6L16.6 25.3L18.1 27.6Z"
       />
       {/* Möhürün dalğalı (scalloped) kənarı */}
       <path

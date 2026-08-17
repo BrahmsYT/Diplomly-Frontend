@@ -10,6 +10,12 @@
   body {
     @apply bg-slate-50 text-slate-900;
   }
+
+  /* Hər link/düymədə hover-fokus rəng dəyişimi yumşaq keçsin — sərt "snap" olmasın. */
+  a,
+  button {
+    @apply transition-colors duration-150;
+  }
 }
 
 @layer components {
@@ -37,8 +43,8 @@
 
   .input {
     @apply w-full rounded border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900
-           placeholder:text-slate-400 focus:border-brand-600 focus:outline-none focus:ring-1
-           focus:ring-brand-600/20 disabled:bg-slate-50 disabled:text-slate-500;
+           transition-shadow placeholder:text-slate-400 focus:border-brand-600 focus:outline-none
+           focus:ring-1 focus:ring-brand-600/20 disabled:bg-slate-50 disabled:text-slate-500;
   }
 
   .label {

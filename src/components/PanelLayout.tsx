@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { initials } from '../lib/format';
 import { Logo } from './ui';
@@ -28,11 +28,25 @@ const ORG_NAV: NavItem[] = [
 export function PanelLayout({ variant }: { variant: 'learner' | 'organization' }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const navRef = useRef<HTMLElement>(null);
+  const [indicator, setIndicator] = useState<{ top: number; height: number; left: number } | null>(
+    null,
+  );
 
   const nav = variant === 'learner' ? LEARNER_NAV : ORG_NAV;
   const title = variant === 'learner' ? 'Müdavim paneli' : 'Təşkilat paneli';
   const subtitle = variant === 'learner' ? `${user?.name} ${user?.surname}` : user?.organization?.name;
+
+  // Aktiv menyu maddəsinin yanındakı xətt yeni maddəyə sürüşərək keçir.
+  useEffect(() => {
+    const active = navRef.current?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (active) {
+      setIndicator({ top: active.offsetTop, height: active.offsetHeight, left: active.offsetLeft });
+    }
+  }, [location.pathname]);
 
   const handleLogout = () => {
     logout();
@@ -48,9 +62,11 @@ export function PanelLayout({ variant }: { variant: 'learner' | 'organization' }
         }`}
       >
         <div className="flex h-16 items-center gap-2.5 border-b border-slate-200 px-5">
-          <Link to="/" className="flex items-center gap-2.5">
+          <Link to="/" className="flex items-center gap-1">
             <Logo />
-            <span className="text-lg font-semibold tracking-tight">Diplomly</span>
+            <span className="font-wordmark text-base font-semibold uppercase tracking-wide">
+              Diplomly
+            </span>
           </Link>
         </div>
 
@@ -66,7 +82,7 @@ export function PanelLayout({ variant }: { variant: 'learner' | 'organization' }
           </div>
         </div>
 
-        <nav className="space-y-1 p-3">
+        <nav ref={navRef} className="relative space-y-1 p-3">
           {nav.map((item) => (
             <NavLink
               key={item.to}
@@ -74,16 +90,22 @@ export function PanelLayout({ variant }: { variant: 'learner' | 'organization' }
               end={item.end}
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
-                `block border-l-2 px-3 py-2 text-sm font-medium transition-colors ${
+                `block px-3 py-2 text-sm font-medium transition-colors ${
                   isActive
-                    ? 'border-brand-700 bg-brand-50 text-brand-800'
-                    : 'border-transparent text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    ? 'bg-brand-50 text-brand-800'
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                 }`
               }
             >
               {item.label}
             </NavLink>
           ))}
+          {indicator && (
+            <span
+              className="absolute w-0.5 bg-brand-700 transition-all duration-300 ease-out"
+              style={{ top: indicator.top, height: indicator.height, left: indicator.left }}
+            />
+          )}
 
           <button
             type="button"
