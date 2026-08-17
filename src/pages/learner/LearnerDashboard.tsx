@@ -30,7 +30,7 @@ export function LearnerDashboard() {
   return (
     <>
       <PageHeader
-        title={`Salam, ${user?.name} 👋`}
+        title={`Salam, ${user?.name}`}
         description="Aldığınız bütün sertifikatlar bir yerdə."
       />
 
@@ -66,7 +66,6 @@ export function LearnerDashboard() {
 
       {certificates.length === 0 ? (
         <EmptyState
-          icon="🎓"
           title="Hələ sertifikatınız yoxdur"
           description="Təşkilat sizin e-mail ünvanınıza sertifikat verdikdə o, avtomatik burada görünəcək."
         />

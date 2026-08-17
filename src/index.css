@@ -13,38 +13,53 @@
 }
 
 @layer components {
+  /* Serif treatment for page-level headings — the platform's one editorial flourish. */
+  .font-display {
+    @apply font-serif tracking-tight;
+  }
+
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium
+    @apply inline-flex items-center justify-center gap-2 rounded px-4 py-2.5 text-sm font-medium
            transition-colors disabled:cursor-not-allowed disabled:opacity-60;
   }
 
   .btn-primary {
-    @apply btn bg-brand-600 text-white hover:bg-brand-700;
+    @apply btn bg-brand-700 text-white hover:bg-brand-800;
   }
 
   .btn-secondary {
-    @apply btn border border-slate-300 bg-white text-slate-700 hover:bg-slate-50;
+    @apply btn border border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50;
   }
 
   .btn-danger {
-    @apply btn border border-red-200 bg-white text-red-600 hover:bg-red-50;
+    @apply btn border border-red-200 bg-white text-red-700 hover:bg-red-50;
   }
 
   .input {
-    @apply w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900
-           placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2
-           focus:ring-brand-500/20 disabled:bg-slate-50 disabled:text-slate-500;
+    @apply w-full rounded border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900
+           placeholder:text-slate-400 focus:border-brand-600 focus:outline-none focus:ring-1
+           focus:ring-brand-600/20 disabled:bg-slate-50 disabled:text-slate-500;
   }
 
   .label {
-    @apply mb-1.5 block text-sm font-medium text-slate-700;
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500;
   }
 
   .card {
-    @apply rounded-xl border border-slate-200 bg-white shadow-card;
+    @apply rounded-xl border border-slate-200 bg-white;
   }
 
   .field-error {
-    @apply mt-1.5 text-xs text-red-600;
+    @apply mt-1.5 text-xs text-red-700;
+  }
+
+  /* Small rectangular status tag — deliberately not a pill. */
+  .tag {
+    @apply inline-flex items-center gap-1.5 rounded-sm border px-2 py-0.5 text-xs font-medium;
+  }
+
+  /* Uppercase kicker line used above headings instead of a badge pill. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-brand-700;
   }
 }

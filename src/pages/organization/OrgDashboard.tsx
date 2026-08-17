@@ -54,7 +54,6 @@ export function OrgDashboard() {
 
       {!stats || stats.recent.length === 0 ? (
         <EmptyState
-          icon="📜"
           title="Hələ sertifikat verməmisiniz"
           description="İlk sertifikatı yaratmaq üçün aşağıdakı düyməyə basın. Kod avtomatik veriləcək."
           action={

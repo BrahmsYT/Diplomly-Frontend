@@ -133,13 +133,22 @@ export function NewCertificate() {
         <PageHeader title="Sertifikat yaradıldı" />
 
         <div className="card p-6">
-          <div className="mb-6 flex items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3">
-            <span className="text-2xl">✅</span>
+          <div className="mb-6 flex items-center gap-3 border-l-4 border-emerald-600 bg-emerald-50 px-4 py-3">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              className="h-6 w-6 shrink-0 text-emerald-700"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.5l2.2 2.2L15.5 10" />
+              <circle cx="12" cy="12" r="9" />
+            </svg>
             <div>
-              <p className="font-medium text-emerald-800">
+              <p className="font-medium text-emerald-900">
                 {created.learnerName} üçün sertifikat hazırdır
               </p>
-              <p className="text-sm text-emerald-700">
+              <p className="text-sm text-emerald-800">
                 Sistem avtomatik unikal kod verdi — əl ilə yazmağa ehtiyac yoxdur.
               </p>
             </div>
@@ -252,13 +261,22 @@ export function NewCertificate() {
 
             {/* Bölmə 4.5: e-mail tanındıqda ad/soyad avtomatik gəlir */}
             {lookup?.found && (
-              <div className="mt-3 flex items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3">
-                <span className="text-lg">👤</span>
+              <div className="mt-3 flex items-center gap-3 border-l-4 border-emerald-600 bg-emerald-50 px-4 py-3">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  className="h-5 w-5 shrink-0 text-emerald-700"
+                >
+                  <circle cx="12" cy="8" r="3.2" />
+                  <path strokeLinecap="round" d="M5.5 20c0-3.6 2.9-6.2 6.5-6.2s6.5 2.6 6.5 6.2" />
+                </svg>
                 <div className="text-sm">
                   <p className="font-medium text-emerald-900">
                     {lookup.name} {lookup.surname}
                   </p>
-                  <p className="text-emerald-700">
+                  <p className="text-emerald-800">
                     {lookup.source === 'user'
                       ? 'Sistemdə qeydiyyatdan keçib — ad avtomatik dolduruldu.'
                       : 'Əvvəlki sertifikatdan tapıldı — ad avtomatik dolduruldu.'}

@@ -70,7 +70,7 @@ export const CertificateTemplate = forwardRef<HTMLDivElement, Props>(
             width: 260,
             height: 260,
             borderRadius: '50%',
-            backgroundColor: '#eef2ff',
+            backgroundColor: '#faf1f2',
             opacity: 0.7,
           }}
         />
@@ -133,8 +133,8 @@ export const CertificateTemplate = forwardRef<HTMLDivElement, Props>(
                 style={{
                   width: 34,
                   height: 34,
-                  borderRadius: 8,
-                  backgroundColor: '#4f46e5',
+                  borderRadius: 4,
+                  backgroundColor: '#5C2530',
                   color: '#ffffff',
                   display: 'flex',
                   alignItems: 'center',
@@ -233,7 +233,7 @@ export const CertificateTemplate = forwardRef<HTMLDivElement, Props>(
             </p>
 
             {/* Kurs adı */}
-            <p style={{ fontSize: 26, fontWeight: 700, margin: '0 0 14px', color: '#312e81' }}>
+            <p style={{ fontSize: 26, fontWeight: 700, margin: '0 0 14px', color: '#5C2530' }}>
               {certificate.courseName}
             </p>
 

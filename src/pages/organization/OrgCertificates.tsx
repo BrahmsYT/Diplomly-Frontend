@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EmptyState, PageHeader, Spinner, StatusBadge } from '../../components/ui';
+import { EmptyState, PageHeader, SearchIcon, Spinner, StatusBadge } from '../../components/ui';
 import { certificateApi } from '../../lib/api';
 import { formatDate } from '../../lib/format';
 import type { Certificate, Pagination } from '../../types';
@@ -96,7 +96,7 @@ export function OrgCertificates() {
         </div>
       ) : items.length === 0 ? (
         <EmptyState
-          icon="🔍"
+          icon={search ? <SearchIcon className="h-6 w-6" /> : undefined}
           title={search ? 'Nəticə tapılmadı' : 'Hələ sertifikat yoxdur'}
           description={
             search

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { CertificateTemplate } from '../../components/CertificateTemplate';
-import { Alert, PageLoader, Spinner, StatusBadge } from '../../components/ui';
+import { Alert, PageLoader, SearchIcon, Spinner, StatusBadge } from '../../components/ui';
 import { ApiError, publicApi } from '../../lib/api';
 import { copyToClipboard, downloadAsJpg, downloadAsPdf } from '../../lib/download';
 import { formatDate } from '../../lib/format';
@@ -80,8 +80,8 @@ export function PublicCertificatePage() {
     return (
       <div className="mx-auto max-w-2xl px-4 py-16 text-center">
         <div className="card px-6 py-14">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-2xl">
-            🔍
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded border border-slate-200 text-slate-400">
+            <SearchIcon className="h-6 w-6" />
           </div>
           <h1 className="text-xl font-semibold text-slate-900">Sertifikat tapılmadı</h1>
           <p className="mx-auto mt-2 max-w-sm text-sm text-slate-500">

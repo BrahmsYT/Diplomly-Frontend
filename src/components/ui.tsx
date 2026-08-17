@@ -17,9 +17,26 @@ export function Spinner({ className = 'h-5 w-5' }: { className?: string }) {
 export function PageLoader({ label = 'Yüklənir...' }: { label?: string }) {
   return (
     <div className="flex min-h-[300px] flex-col items-center justify-center gap-3 text-slate-500">
-      <Spinner className="h-8 w-8 text-brand-600" />
+      <Spinner className="h-8 w-8 text-brand-700" />
       <p className="text-sm">{label}</p>
     </div>
+  );
+}
+
+export function DocumentIcon({ className = 'h-7 w-7' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className} aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M7 3.5h6.5L18 8v11.5a1 1 0 01-1 1H7a1 1 0 01-1-1V4.5a1 1 0 011-1z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 3.5V8H18" />
+    </svg>
+  );
+}
+
+export function SearchIcon({ className = 'h-7 w-7' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={className} aria-hidden="true">
+      <path strokeLinecap="round" d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
   );
 }
 
@@ -31,39 +48,33 @@ export function Alert({
   children: ReactNode;
 }) {
   const styles = {
-    error: 'border-red-200 bg-red-50 text-red-800',
-    success: 'border-emerald-200 bg-emerald-50 text-emerald-800',
-    info: 'border-brand-200 bg-brand-50 text-brand-800',
-    warning: 'border-amber-200 bg-amber-50 text-amber-800',
+    error: 'border-red-600 bg-red-50 text-red-900',
+    success: 'border-emerald-600 bg-emerald-50 text-emerald-900',
+    info: 'border-slate-500 bg-slate-100 text-slate-800',
+    warning: 'border-amber-500 bg-amber-50 text-amber-900',
   }[variant];
 
   return (
-    <div className={`rounded-lg border px-4 py-3 text-sm ${styles}`} role="alert">
+    <div className={`rounded-sm border-l-4 px-4 py-3 text-sm ${styles}`} role="alert">
       {children}
     </div>
   );
 }
 
-/** Bölmə 4.7 — status rənglə fərqləndirilir. */
+/** Bölmə 4.7 — status rənglə fərqləndirilir; kvadrat teq, pill yox. */
 export function StatusBadge({ status, label }: { status: CertStatus | string; label?: string }) {
   const config: Record<string, { classes: string; text: string }> = {
-    issued: { classes: 'bg-emerald-50 text-emerald-700 ring-emerald-600/20', text: 'Aktiv' },
-    expired: { classes: 'bg-amber-50 text-amber-700 ring-amber-600/20', text: 'Müddəti bitib' },
-    revoked: { classes: 'bg-red-50 text-red-700 ring-red-600/20', text: 'Ləğv edilib' },
+    issued: { classes: 'border-emerald-200 bg-emerald-50 text-emerald-800', text: 'Aktiv' },
+    expired: { classes: 'border-amber-200 bg-amber-50 text-amber-800', text: 'Müddəti bitib' },
+    revoked: { classes: 'border-red-200 bg-red-50 text-red-800', text: 'Ləğv edilib' },
   };
 
   const { classes, text } = config[status] ?? {
-    classes: 'bg-slate-100 text-slate-700 ring-slate-500/20',
+    classes: 'border-slate-200 bg-slate-100 text-slate-700',
     text: status,
   };
 
-  return (
-    <span
-      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${classes}`}
-    >
-      {label ?? text}
-    </span>
-  );
+  return <span className={`tag ${classes}`}>{label ?? text}</span>;
 }
 
 /** Müdavimin təsdiq vəziyyəti (bölmə 7, addım 6). */
@@ -71,20 +82,14 @@ export function AcceptanceBadge({ acceptance }: { acceptance: string }) {
   if (acceptance === 'accepted') return null;
 
   const config: Record<string, { classes: string; text: string }> = {
-    pending: { classes: 'bg-brand-50 text-brand-700 ring-brand-600/20', text: 'Təsdiq gözləyir' },
-    rejected: { classes: 'bg-slate-100 text-slate-600 ring-slate-500/20', text: 'İmtina edilib' },
+    pending: { classes: 'border-brand-200 bg-brand-50 text-brand-800', text: 'Təsdiq gözləyir' },
+    rejected: { classes: 'border-slate-200 bg-slate-100 text-slate-600', text: 'İmtina edilib' },
   };
 
   const item = config[acceptance];
   if (!item) return null;
 
-  return (
-    <span
-      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${item.classes}`}
-    >
-      {item.text}
-    </span>
-  );
+  return <span className={`tag ${item.classes}`}>{item.text}</span>;
 }
 
 export function StatCard({
@@ -100,10 +105,10 @@ export function StatCard({
 }) {
   const accents = {
     slate: 'text-slate-900',
-    brand: 'text-brand-600',
-    emerald: 'text-emerald-600',
-    amber: 'text-amber-600',
-    red: 'text-red-600',
+    brand: 'text-brand-700',
+    emerald: 'text-emerald-700',
+    amber: 'text-amber-700',
+    red: 'text-red-700',
   }[accent];
 
   return (
@@ -119,17 +124,17 @@ export function EmptyState({
   title,
   description,
   action,
-  icon = '📄',
+  icon,
 }: {
   title: string;
   description?: string;
   action?: ReactNode;
-  icon?: string;
+  icon?: ReactNode;
 }) {
   return (
     <div className="card flex flex-col items-center justify-center px-6 py-16 text-center">
-      <div className="mb-4 text-4xl" aria-hidden="true">
-        {icon}
+      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded border border-slate-200 text-slate-400">
+        {icon ?? <DocumentIcon className="h-6 w-6" />}
       </div>
       <h3 className="text-base font-semibold text-slate-900">{title}</h3>
       {description && <p className="mt-1.5 max-w-sm text-sm text-slate-500">{description}</p>}
@@ -150,7 +155,7 @@ export function PageHeader({
   return (
     <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">{title}</h1>
+        <h1 className="font-display text-2xl font-semibold text-slate-900">{title}</h1>
         {description && <p className="mt-1 text-sm text-slate-500">{description}</p>}
       </div>
       {action}
@@ -168,23 +173,31 @@ export function DetailRow({ label, value }: { label: string; value: ReactNode })
   );
 }
 
+/** Diplomly-nin nişanı: dalğalı kənarlı mum-möhür + lent quyruqları. */
 export function Logo({ className = 'h-8 w-8' }: { className?: string }) {
   return (
-    <span
-      className={`inline-flex items-center justify-center rounded-lg bg-brand-600 text-white ${className}`}
-      aria-hidden="true"
-    >
-      <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
-        <path
-          d="M12 3L2 8l10 5 10-5-10-5z"
-          fill="currentColor"
-          opacity="0.9"
-        />
-        <path
-          d="M5 11v4.5c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V11l-7 3.5L5 11z"
-          fill="currentColor"
-        />
-      </svg>
-    </span>
+    <svg viewBox="0 0 24 32" fill="none" className={`shrink-0 text-brand-700 ${className}`} aria-hidden="true">
+      {/* Lent quyruqları — aşağı endikcə bir-birindən aralanır */}
+      <path
+        fill="currentColor"
+        d="M9.5 18.5L11.5 18.5L8.5 30.4L7 27.4L5.5 30.4Z M14.5 18.5L12.5 18.5L15.5 30.4L17 27.4L18.5 30.4Z"
+      />
+      {/* Möhürün dalğalı (scalloped) kənarı */}
+      <path
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+        d="M12 3.5Q13.94 2.02 15.04 4.19Q17.42 3.7 17.47 6.14Q19.84 6.73 18.82 8.94Q20.7 10.5 18.82 12.06Q19.84 14.27 17.47 14.86Q17.42 17.3 15.04 16.81Q13.94 18.98 12 17.5Q10.06 18.98 8.96 16.81Q6.58 17.3 6.53 14.86Q4.16 14.27 5.18 12.06Q3.3 10.5 5.18 8.94Q4.16 6.73 6.53 6.14Q6.58 3.7 8.96 4.19Q10.06 2.02 12 3.5Z"
+      />
+      {/* Daxili damğa çərçivəsi + təsdiq işarəsi */}
+      <circle cx="12" cy="10.5" r="5.6" stroke="currentColor" strokeWidth="0.9" />
+      <path
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9.4 10.7L11 12.3L14.7 8.8"
+      />
+    </svg>
   );
 }

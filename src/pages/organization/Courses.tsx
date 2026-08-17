@@ -115,7 +115,6 @@ export function Courses() {
 
       {courses.length === 0 ? (
         <EmptyState
-          icon="📚"
           title="Kurs kataloqu boşdur"
           description="Kurs əlavə edin — sertifikat yaradarkən onu siyahıdan seçəcəksiniz. Yeni sertifikatda yazdığınız kurs da avtomatik bura düşür."
         />

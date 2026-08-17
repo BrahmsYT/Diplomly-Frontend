@@ -48,7 +48,9 @@ export function Verify() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-3xl font-bold tracking-tight text-slate-900">Sertifikatı yoxla</h1>
+      <h1 className="font-display text-3xl font-semibold tracking-tight text-slate-900">
+        Sertifikatı yoxla
+      </h1>
       <p className="mt-2 text-slate-600">
         Sertifikat kodunu və ya müdavimin e-mail ünvanını daxil edin.
       </p>
@@ -196,11 +198,11 @@ function CertificateDetails({ certificate }: { certificate: PublicCertificate })
 function NotFoundView({ message, hint }: { message: string; hint?: string }) {
   return (
     <div className="card flex flex-col items-center px-6 py-14 text-center">
-      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-6 w-6 text-slate-400">
+      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded border border-slate-200 text-slate-400">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-6 w-6">
           <path
             strokeLinecap="round"
-            strokeWidth="2"
+            strokeWidth="1.5"
             d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"
           />
         </svg>

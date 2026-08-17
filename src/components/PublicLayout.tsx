@@ -31,8 +31,10 @@ export function PublicLayout() {
                 to={item.to}
                 end={item.end}
                 className={({ isActive }) =>
-                  `rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                    isActive ? 'bg-brand-50 text-brand-700' : 'text-slate-600 hover:bg-slate-50'
+                  `border-b-2 px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'border-brand-700 text-brand-800'
+                      : 'border-transparent text-slate-600 hover:text-slate-900'
                   }`
                 }
               >
@@ -67,8 +69,8 @@ export function PublicLayout() {
               to={item.to}
               end={item.end}
               className={({ isActive }) =>
-                `whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium ${
-                  isActive ? 'bg-brand-50 text-brand-700' : 'text-slate-600'
+                `whitespace-nowrap rounded px-3 py-1.5 text-sm font-medium ${
+                  isActive ? 'bg-brand-50 text-brand-800' : 'text-slate-600'
                 }`
               }
             >

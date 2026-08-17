@@ -56,7 +56,7 @@ export function PanelLayout({ variant }: { variant: 'learner' | 'organization' }
 
         <div className="border-b border-slate-100 px-5 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-100 text-sm font-semibold text-brand-700">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded border border-brand-200 bg-brand-50 text-sm font-semibold text-brand-800">
               {initials(subtitle ?? user?.name ?? '?')}
             </div>
             <div className="min-w-0">
@@ -74,10 +74,10 @@ export function PanelLayout({ variant }: { variant: 'learner' | 'organization' }
               end={item.end}
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
-                `block rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                `block border-l-2 px-3 py-2 text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-brand-50 text-brand-700'
-                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    ? 'border-brand-700 bg-brand-50 text-brand-800'
+                    : 'border-transparent text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                 }`
               }
             >

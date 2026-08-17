@@ -10,31 +10,43 @@ export function RegisterChoice() {
     <div className="mx-auto max-w-2xl px-4 py-16">
       <div className="mb-10 text-center">
         <Logo className="mx-auto h-11 w-11" />
-        <h1 className="mt-4 text-2xl font-bold text-slate-900">Qeydiyyatdan keçin</h1>
+        <h1 className="font-display mt-4 text-2xl font-semibold text-slate-900">Qeydiyyatdan keçin</h1>
         <p className="mt-1.5 text-slate-500">Hansı tərəf kimi qeydiyyatdan keçirsiniz?</p>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Link to="/qeydiyyat/mudavim" className="card p-6 transition-shadow hover:shadow-lift">
-          <div className="text-3xl" aria-hidden="true">
-            🎓
+        <Link to="/qeydiyyat/mudavim" className="card p-6 transition-colors hover:border-brand-300">
+          <div
+            className="flex h-10 w-10 items-center justify-center rounded border border-brand-700 text-brand-700"
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 7l8-3.5L20 7l-8 3.5L4 7z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M7 9v5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V9" />
+            </svg>
           </div>
           <h2 className="mt-4 text-lg font-semibold text-slate-900">Müdavim / Məzun</h2>
           <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
             Aldığınız bütün sertifikatları bir hesabda toplayın, paylaşın və yükləyin.
           </p>
-          <span className="mt-4 inline-block text-sm font-medium text-brand-600">Davam et →</span>
+          <span className="mt-4 inline-block text-sm font-medium text-brand-800">Davam et →</span>
         </Link>
 
-        <Link to="/qeydiyyat/teskilat" className="card p-6 transition-shadow hover:shadow-lift">
-          <div className="text-3xl" aria-hidden="true">
-            🏛️
+        <Link to="/qeydiyyat/teskilat" className="card p-6 transition-colors hover:border-brand-300">
+          <div
+            className="flex h-10 w-10 items-center justify-center rounded border border-brand-700 text-brand-700"
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 21V9l8-5 8 5v12" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 21v-6h6v6" />
+            </svg>
           </div>
           <h2 className="mt-4 text-lg font-semibold text-slate-900">Şirkət / Təlim təşkilatı</h2>
           <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
             Sertifikat yaradın, idarə edin və verdiyiniz sənədlərin həqiqiliyini təmin edin.
           </p>
-          <span className="mt-4 inline-block text-sm font-medium text-brand-600">Davam et →</span>
+          <span className="mt-4 inline-block text-sm font-medium text-brand-800">Davam et →</span>
         </Link>
       </div>
 
@@ -87,7 +99,7 @@ export function RegisterLearner() {
     <div className="mx-auto max-w-md px-4 py-12">
       <div className="mb-8 text-center">
         <Logo className="mx-auto h-11 w-11" />
-        <h1 className="mt-4 text-2xl font-bold text-slate-900">Müdavim qeydiyyatı</h1>
+        <h1 className="font-display mt-4 text-2xl font-semibold text-slate-900">Müdavim qeydiyyatı</h1>
         <p className="mt-1.5 text-sm text-slate-500">
           Bu e-mail ünvanına əvvəlcədən verilmiş sertifikatlar hesabınıza avtomatik bağlanacaq.
         </p>
@@ -207,7 +219,7 @@ export function RegisterOrganization() {
     <div className="mx-auto max-w-2xl px-4 py-12">
       <div className="mb-8 text-center">
         <Logo className="mx-auto h-11 w-11" />
-        <h1 className="mt-4 text-2xl font-bold text-slate-900">Təşkilat qeydiyyatı</h1>
+        <h1 className="font-display mt-4 text-2xl font-semibold text-slate-900">Təşkilat qeydiyyatı</h1>
         <p className="mt-1.5 text-sm text-slate-500">
           Təlim mərkəzi, universitet, akademiya və ya şirkətin daxili akademiyası.
         </p>

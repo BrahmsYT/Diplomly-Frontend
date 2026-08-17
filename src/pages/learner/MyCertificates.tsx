@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { CertificateCard } from '../../components/CertificateCard';
-import { EmptyState, PageHeader, PageLoader } from '../../components/ui';
+import { EmptyState, PageHeader, PageLoader, SearchIcon } from '../../components/ui';
 import { learnerApi } from '../../lib/api';
 import type { Certificate } from '../../types';
 
@@ -101,7 +101,7 @@ export function MyCertificates() {
 
       {visible.length === 0 ? (
         <EmptyState
-          icon="🔍"
+          icon={certificates.length === 0 ? undefined : <SearchIcon className="h-6 w-6" />}
           title={certificates.length === 0 ? 'Hələ sertifikatınız yoxdur' : 'Nəticə tapılmadı'}
           description={
             certificates.length === 0

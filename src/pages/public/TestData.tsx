@@ -68,11 +68,11 @@ export function TestData() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-12">
-      <span className="inline-flex items-center rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800 ring-1 ring-inset ring-amber-200">
-        Demo səhifəsi
-      </span>
+      <span className="tag border-amber-200 bg-amber-50 text-amber-800">Demo səhifəsi</span>
 
-      <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-900">Sınaq məlumatları</h1>
+      <h1 className="font-display mt-4 text-3xl font-semibold tracking-tight text-slate-900">
+        Sınaq məlumatları
+      </h1>
       <p className="mt-2 text-slate-600">
         Sistemi sınamaq üçün hazır hesablar. Baza boşdursa aşağıdakı düymə ilə nümunə məlumatları
         yaradın.
@@ -143,10 +143,10 @@ export function TestData() {
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-semibold text-slate-900">Bazanın vəziyyəti</h2>
           <span
-            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
+            className={`tag ${
               status?.seeded
-                ? 'bg-emerald-50 text-emerald-700 ring-emerald-600/20'
-                : 'bg-amber-50 text-amber-700 ring-amber-600/20'
+                ? 'border-emerald-200 bg-emerald-50 text-emerald-800'
+                : 'border-amber-200 bg-amber-50 text-amber-800'
             }`}
           >
             {status?.seeded ? 'Məlumat var' : 'Boşdur'}

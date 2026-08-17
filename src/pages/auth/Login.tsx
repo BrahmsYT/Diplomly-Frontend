@@ -36,7 +36,7 @@ export function Login() {
     <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-center px-4 py-12">
       <div className="mb-8 flex flex-col items-center text-center">
         <Logo className="h-11 w-11" />
-        <h1 className="mt-4 text-2xl font-bold text-slate-900">Diplomly-yə daxil ol</h1>
+        <h1 className="font-display mt-4 text-2xl font-semibold text-slate-900">Diplomly-yə daxil ol</h1>
         <p className="mt-1.5 text-sm text-slate-500">
           Müdavim və təşkilat hesabları eyni formdan giriş edir.
         </p>
