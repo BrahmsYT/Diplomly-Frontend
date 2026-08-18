@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CertificateCard } from '../../components/CertificateCard';
 import { Alert, EmptyState, PageHeader, PageLoader, StatCard } from '../../components/ui';
 import { useAuth } from '../../context/AuthContext';
-import { learnerApi } from '../../lib/api';
+import { ApiError, learnerApi } from '../../lib/api';
 import type { Certificate, LearnerStats } from '../../types';
 
 /** Bölmə 3.2 — müdavim dashboard. */
@@ -12,6 +12,7 @@ export function LearnerDashboard() {
   const [stats, setStats] = useState<LearnerStats | null>(null);
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     Promise.all([learnerApi.stats(), learnerApi.certificates()])
@@ -19,7 +20,9 @@ export function LearnerDashboard() {
         setStats(statsData);
         setCertificates(certificatesData);
       })
-      .catch(() => undefined)
+      .catch((err) =>
+        setError(err instanceof ApiError ? err.message : 'Məlumatlar yüklənmədi'),
+      )
       .finally(() => setLoading(false));
   }, []);
 
@@ -33,6 +36,12 @@ export function LearnerDashboard() {
         title={`Salam, ${user?.name}`}
         description="Aldığınız bütün sertifikatlar bir yerdə."
       />
+
+      {error && (
+        <div className="mb-6">
+          <Alert>{error}</Alert>
+        </div>
+      )}
 
       {/* Bölmə 7, addım 6 — təsdiq gözləyən sertifikatlar */}
       {pending.length > 0 && (

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { AccountSettings } from '../../components/AccountSettings';
 import { Alert, PageHeader, PageLoader, Spinner } from '../../components/ui';
 import { useAuth } from '../../context/AuthContext';
 import { ApiError, orgApi } from '../../lib/api';
@@ -42,7 +43,7 @@ export function OrgProfile() {
           headName: data.headName ?? '',
         });
       })
-      .catch(() => undefined)
+      .catch((err) => setError(err instanceof ApiError ? err.message : 'Təşkilat məlumatları yüklənmədi'))
       .finally(() => setLoading(false));
   }, []);
 
@@ -172,15 +173,11 @@ export function OrgProfile() {
         </button>
       </form>
 
-      {organization && (
-        <section className="card mt-6 p-6">
-          <h2 className="mb-3 text-base font-semibold text-slate-900">Hesab sahibi</h2>
-          <p className="text-sm text-slate-700">
-            {organization.owner.name} {organization.owner.surname}
-          </p>
-          <p className="text-sm text-slate-500">{organization.owner.email}</p>
-        </section>
-      )}
+      {/* Hesab sahibinin şəxsi məlumatları və şifrəsi — təşkilat məlumatlarından ayrıdır. */}
+      <div className="mt-8">
+        <h2 className="mb-4 text-lg font-semibold text-slate-900">Hesab sahibi</h2>
+        <AccountSettings />
+      </div>
     </>
   );
 }

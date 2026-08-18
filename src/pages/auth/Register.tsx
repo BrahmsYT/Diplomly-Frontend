@@ -115,6 +115,8 @@ export function RegisterLearner() {
             onChange={update('name')}
             error={fieldErrors.name}
             autoComplete="given-name"
+            minLength={2}
+            maxLength={80}
           />
           <Field
             label="Soyad"
@@ -122,6 +124,8 @@ export function RegisterLearner() {
             onChange={update('surname')}
             error={fieldErrors.surname}
             autoComplete="family-name"
+            minLength={2}
+            maxLength={80}
           />
         </div>
 
@@ -142,6 +146,7 @@ export function RegisterLearner() {
           onChange={update('password')}
           error={fieldErrors.password}
           autoComplete="new-password"
+          minLength={6}
           hint="Ən azı 6 simvol."
         />
 
@@ -237,6 +242,8 @@ export function RegisterOrganization() {
               onChange={updateOrg('name')}
               error={fieldErrors['organization.name']}
               placeholder="ABC Academy"
+              minLength={2}
+              maxLength={120}
             />
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -325,6 +332,7 @@ export function RegisterOrganization() {
               onChange={updateOwner('password')}
               error={fieldErrors['owner.password']}
               autoComplete="new-password"
+              minLength={6}
               hint="Ən azı 6 simvol."
             />
           </div>
@@ -361,6 +369,9 @@ interface FieldProps {
   placeholder?: string;
   required?: boolean;
   autoComplete?: string;
+  /** Brauzerin öz yoxlaması — serverə getmədən dərhal xəbərdarlıq verir. */
+  minLength?: number;
+  maxLength?: number;
 }
 
 function Field({
@@ -373,6 +384,8 @@ function Field({
   placeholder,
   required = true,
   autoComplete,
+  minLength,
+  maxLength,
 }: FieldProps) {
   const id = `field-${label.replace(/\s+/g, '-').toLowerCase()}`;
 
@@ -391,6 +404,8 @@ function Field({
         placeholder={placeholder}
         required={required}
         autoComplete={autoComplete}
+        minLength={minLength}
+        maxLength={maxLength}
       />
       {error ? (
         <p className="field-error">{error}</p>

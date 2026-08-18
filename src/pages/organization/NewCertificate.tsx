@@ -47,7 +47,7 @@ export function NewCertificate() {
         // Kataloq boşdursa dərhal yeni kurs yazma rejiminə keçirik.
         if (data.length === 0) setUseNewCourse(true);
       })
-      .catch(() => undefined)
+      .catch((err) => setError(err instanceof ApiError ? err.message : 'Kurs siyahısı yüklənmədi'))
       .finally(() => setCoursesLoading(false));
   }, []);
 
@@ -305,6 +305,8 @@ export function NewCertificate() {
                   onChange={update('learnerName')}
                   className="input"
                   required
+                  minLength={2}
+                  maxLength={80}
                 />
                 {fieldErrors.learnerName && <p className="field-error">{fieldErrors.learnerName}</p>}
               </div>
@@ -318,6 +320,8 @@ export function NewCertificate() {
                   onChange={update('learnerSurname')}
                   className="input"
                   required
+                  minLength={2}
+                  maxLength={80}
                 />
                 {fieldErrors.learnerSurname && (
                   <p className="field-error">{fieldErrors.learnerSurname}</p>
@@ -438,6 +442,7 @@ export function NewCertificate() {
                   type="date"
                   value={form.expiryDate}
                   onChange={update('expiryDate')}
+                  min={form.issueDate || undefined}
                   className="input"
                 />
                 {fieldErrors.expiryDate && <p className="field-error">{fieldErrors.expiryDate}</p>}

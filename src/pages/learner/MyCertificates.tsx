@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { CertificateCard } from '../../components/CertificateCard';
-import { EmptyState, PageHeader, PageLoader, SearchIcon } from '../../components/ui';
-import { learnerApi } from '../../lib/api';
+import { Alert, EmptyState, PageHeader, PageLoader, SearchIcon } from '../../components/ui';
+import { ApiError, learnerApi } from '../../lib/api';
 import type { Certificate } from '../../types';
 
 type Filter = 'all' | 'issued' | 'expired' | 'revoked' | 'pending';
@@ -20,12 +20,15 @@ export function MyCertificates() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<Filter>('all');
   const [search, setSearch] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     learnerApi
       .certificates()
       .then(setCertificates)
-      .catch(() => undefined)
+      .catch((err) =>
+        setError(err instanceof ApiError ? err.message : 'Sertifikatlar yüklənmədi'),
+      )
       .finally(() => setLoading(false));
   }, []);
 
@@ -67,6 +70,12 @@ export function MyCertificates() {
   return (
     <>
       <PageHeader title="Sertifikatlarım" description={`Ümumi ${certificates.length} sertifikat`} />
+
+      {error && (
+        <div className="mb-6">
+          <Alert>{error}</Alert>
+        </div>
+      )}
 
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap gap-2">

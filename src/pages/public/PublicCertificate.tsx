@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { CertificateTemplate } from '../../components/CertificateTemplate';
+import { CertificatePreview } from '../../components/CertificatePreview';
 import { Alert, PageLoader, SearchIcon, Spinner, StatusBadge } from '../../components/ui';
 import { ApiError, publicApi } from '../../lib/api';
 import { copyToClipboard, downloadAsJpg, downloadAsPdf } from '../../lib/download';
@@ -128,15 +128,13 @@ export function PublicCertificatePage() {
 
       {/* Sertifikatın görüntüsü */}
       <div className="card mb-6 overflow-hidden">
-        <div className="overflow-x-auto bg-slate-100 p-4 sm:p-6">
-          <div className="mx-auto w-fit origin-top scale-[0.42] sm:scale-[0.6] md:scale-[0.75] lg:scale-90">
-            <div className="shadow-lift">
-              <CertificateTemplate
-                ref={templateRef}
-                certificate={certificate}
-                qrDataUrl={qrDataUrl}
-              />
-            </div>
+        <div className="bg-slate-100 p-3 sm:p-5">
+          <div className="shadow-lift">
+            <CertificatePreview
+              ref={templateRef}
+              certificate={certificate}
+              qrDataUrl={qrDataUrl}
+            />
           </div>
         </div>
       </div>

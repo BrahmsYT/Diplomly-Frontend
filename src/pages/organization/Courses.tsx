@@ -22,7 +22,7 @@ export function Courses() {
     orgApi
       .courses()
       .then(setCourses)
-      .catch(() => undefined)
+      .catch((err) => setError(err instanceof ApiError ? err.message : 'Kurslar yüklənmədi'))
       .finally(() => setLoading(false));
   }, []);
 
@@ -104,6 +104,7 @@ export function Courses() {
             onChange={(event) => setNewName(event.target.value)}
             className="input flex-1"
             placeholder="Project Management Fundamentals"
+            minLength={2}
             maxLength={160}
           />
           <button type="submit" className="btn-primary shrink-0" disabled={busy === 'create'}>

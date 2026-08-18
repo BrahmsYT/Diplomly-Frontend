@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EmptyState, PageHeader, PageLoader, StatCard, StatusBadge } from '../../components/ui';
+import { Alert, EmptyState, PageHeader, PageLoader, StatCard, StatusBadge } from '../../components/ui';
 import { useAuth } from '../../context/AuthContext';
-import { orgApi } from '../../lib/api';
+import { ApiError, orgApi } from '../../lib/api';
 import { formatDate } from '../../lib/format';
 import type { OrganizationStats } from '../../types';
 
@@ -11,12 +11,15 @@ export function OrgDashboard() {
   const { user } = useAuth();
   const [stats, setStats] = useState<OrganizationStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     orgApi
       .stats()
       .then(setStats)
-      .catch(() => undefined)
+      .catch((err) =>
+        setError(err instanceof ApiError ? err.message : 'Statistika yüklənmədi'),
+      )
       .finally(() => setLoading(false));
   }, []);
 
@@ -33,6 +36,12 @@ export function OrgDashboard() {
           </Link>
         }
       />
+
+      {error && (
+        <div className="mb-6">
+          <Alert>{error}</Alert>
+        </div>
+      )}
 
       <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <StatCard label="Ümumi sertifikat" value={stats?.total ?? 0} />

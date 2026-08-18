@@ -53,7 +53,9 @@ export default defineConfig(({ mode, command }) => {
     },
     build: {
       outDir: 'dist',
-      sourcemap: true,
+      // Production-da sourcemap yayimlanmir - menbe kodu acilmasin ve
+      // bundle olcusu suni sekilde artmasin.
+      sourcemap: command !== 'build',
     },
   };
 });

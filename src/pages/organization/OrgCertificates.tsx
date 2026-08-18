@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EmptyState, PageHeader, SearchIcon, Spinner, StatusBadge } from '../../components/ui';
-import { certificateApi } from '../../lib/api';
+import { Alert, EmptyState, PageHeader, SearchIcon, Spinner, StatusBadge } from '../../components/ui';
+import { ApiError, certificateApi } from '../../lib/api';
 import { formatDate } from '../../lib/format';
 import type { Certificate, Pagination } from '../../types';
 
@@ -23,6 +23,7 @@ export function OrgCertificates() {
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState<StatusFilter>('all');
   const [page, setPage] = useState(1);
+  const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -30,8 +31,10 @@ export function OrgCertificates() {
       const data = await certificateApi.list({ search, status, page, limit: 20 });
       setItems(data.items);
       setPagination(data.pagination);
-    } catch {
+      setError(null);
+    } catch (err) {
       setItems([]);
+      setError(err instanceof ApiError ? err.message : 'Sertifikatlar yüklənmədi');
     } finally {
       setLoading(false);
     }
@@ -61,6 +64,12 @@ export function OrgCertificates() {
           </Link>
         }
       />
+
+      {error && (
+        <div className="mb-6">
+          <Alert>{error}</Alert>
+        </div>
+      )}
 
       <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <input

@@ -135,6 +135,12 @@ export const authApi = {
   }) => post<AuthPayload>('/api/auth/register/organization', input),
 
   me: () => get<User>('/api/auth/me'),
+
+  updateProfile: (input: { name: string; surname: string }) =>
+    patch<User>('/api/auth/profile', input),
+
+  changePassword: (input: { currentPassword: string; newPassword: string }) =>
+    patch<{ message: string }>('/api/auth/password', input),
 };
 
 // ---------------- Public (login tələb etmir) ----------------
@@ -190,6 +196,10 @@ export const certificateApi = {
   },
 
   create: (input: Record<string, unknown>) => post<Certificate>('/api/certificates', input),
+
+  /** Verilmiş sertifikatın düzəldilməsi — kod və status dəyişmir. */
+  update: (code: string, input: Record<string, unknown>) =>
+    put<Certificate>(`/api/certificates/${encodeURIComponent(code)}`, input),
 
   detail: (code: string) => get<Certificate>(`/api/certificates/${encodeURIComponent(code)}`),
 

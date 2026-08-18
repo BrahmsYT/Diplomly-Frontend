@@ -4,6 +4,14 @@ Diplomly platformasının veb interfeysi: public sayt, müdavim paneli və təş
 
 **Stack:** React 18 · Vite · TypeScript · Tailwind CSS · React Router · html2canvas + jsPDF
 
+## Canlı mühit
+
+| | Ünvan |
+|---|---|
+| Sayt | https://diplomly-frontend.vercel.app |
+| Backend API | https://diplomly-backend.onrender.com |
+| Demo məlumatlar | https://diplomly-frontend.vercel.app/test |
+
 > Backend ayrı repo-dadır və ayrı işə salınır: [Diplomly-Backend](https://github.com/BrahmsYT/Diplomly-Backend)
 
 ---
@@ -84,8 +92,10 @@ frontend/
     │   ├── PublicLayout.tsx        Public sayt naviqasiyası + footer
     │   ├── PanelLayout.tsx         Panel yan menyusu (hər iki rol üçün)
     │   ├── ProtectedRoute.tsx      Rola görə giriş qoruması
-    │   ├── CertificateTemplate.tsx Sertifikatın vizual şablonu
+    │   ├── CertificateTemplate.tsx Sertifikatın vizual şablonu (1000×707)
+    │   ├── CertificatePreview.tsx  Şablonu konteynerə uyğun miqyaslayır
     │   ├── CertificateCard.tsx     Müdavim panelindəki kart görünüşü
+    │   ├── AccountSettings.tsx     Ad/soyad + şifrə dəyişmə formu
     │   └── ui.tsx                  StatCard, StatusBadge, Alert, Spinner...
     └── pages/
         ├── public/            Ana səhifə, yoxlama, public sertifikat, info
@@ -130,6 +140,7 @@ frontend/
 | `/teskilat/sertifikatlar` | Cədvəl, axtarış, səhifələmə | 4.3 / 4.4 |
 | `/teskilat/sertifikatlar/:code` | Detal + ləğv etmə | 4.8 |
 | `/teskilat/yeni-sertifikat` | Yeni sertifikat formu | 4.5 |
+| `/teskilat/sertifikatlar/:code/duzelis` | Sertifikatın düzəldilməsi | 4.5 |
 | `/teskilat/kurslar` | Kurs kataloqu | 4.5 |
 | `/teskilat/melumatlar` | Təşkilat məlumatları + sertifikat görünüşü | 4.9 |
 
@@ -185,6 +196,14 @@ Səhifə yeniləndikdə `localStorage`-dəki token ilə `GET /api/auth/me` çağ
 
 **Vacib qeyd:** bu komponentdə Tailwind sinifləri deyil, **inline stillər** istifadə olunur. `html2canvas` xarici CSS sinifləri və müasir rəng funksiyalarını həmişə düzgün oxumur — inline heks rənglərlə yüklənən fayl ekrandakı görüntü ilə eyni çıxır.
 
+### Miqyaslama niyə ayrıca komponentdədir
+
+Şablon sabit 1000×707 pikseldir. Sadəcə `scale-[0.4]` kimi CSS sinfi vermək **işləmir**: `transform: scale()` elementin layout qutusunu kiçiltmir, ona görə element hələ də 1000px yer tutur — mobil ekranda sertifikat sağa çıxır və altında böyük boş sahə qalır, desktopda isə sağ kənarı kəsilir.
+
+[`CertificatePreview.tsx`](src/components/CertificatePreview.tsx) konteynerin real enini `ResizeObserver` ilə ölçür, miqyası ondan hesablayır və sarğıya miqyaslanmış hündürlüyü açıq şəkildə verir. Nəticədə sertifikat hər ekran ölçüsündə tam görünür.
+
+PDF/JPG yükləməsi miqyasdan asılı deyil — `ref` şablonun özünə verilir, ona görə fayl həmişə tam ölçüdən çəkilir.
+
 **Yükləmə axını** (bölmə 3.7):
 
 ```
@@ -226,16 +245,24 @@ Bütün panellər və cədvəllər mobil üçün uyğunlaşdırılıb — cədv�
 | `npm run preview` | Build-i lokal olaraq işə salır |
 | `npm run typecheck` | Yalnız TypeScript yoxlaması |
 
+### Performans
+
+- **Route-level lazy loading** — hər səhifə ayrıca chunk-dır ([`App.tsx`](src/App.tsx)). Sertifikat yoxlamağa gələn şəxs təşkilat panelinin kodunu heç vaxt yükləmir.
+- **html2canvas + jsPDF** (~560 kB) yalnız yükləmə düyməsinə basıldıqda dinamik import ilə gəlir.
+- **Sourcemap production-da yaradılmır** — mənbə kodu yayımlanmır və deploy ölçüsü kiçilir.
+- **`/assets/*` üçün uzunmüddətli keş** başlıqları [`vercel.json`](vercel.json) faylında.
+
 ### Build ölçüləri
 
 | Fayl | Ölçü | gzip |
 |---|---|---|
-| `index.js` (əsas) | 263 kB | 78 kB |
+| `index.js` (əsas) | 190 kB | 62 kB |
+| səhifə chunk-ları | 1–10 kB | hər biri |
 | `html2canvas` | 202 kB | 48 kB |
 | `jspdf` | 358 kB | 118 kB |
 | CSS | 29 kB | 5 kB |
 
-html2canvas və jsPDF ayrı chunk-lardadır və yalnız sertifikat yükləndikdə şəbəkədən gəlir.
+Səhifələr və PDF kitabxanaları ayrı chunk-lardadır — ilk açılışda yalnız əsas bundle + açılan səhifənin chunk-ı yüklənir.
 
 ---
 
@@ -304,9 +331,7 @@ npm run preview
 ### Deploy-dan sonra yoxlanılası 3 şey
 
 1. **`/test`** səhifəsini açıb nümunə məlumatları yaradın.
-2. **`/certificate/DPL-000001`** ünvanını **birbaşa brauzerə yazın.** 404 verirsə SPA fallback lazımdır — kök qovluğa `vercel.json` əlavə edin:
-   ```json
-   { "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
-   ```
-   Bu addım vacibdir: bütün QR kodlar məhz belə birbaşa açılan linklərdir.
+2. **`/certificate/DPL-000001`** ünvanını **birbaşa brauzerə yazın** — açılmalıdır.
+
+   SPA fallback [`vercel.json`](vercel.json) faylı ilə təmin olunub: Vercel bütün naməlum yolları `index.html`-ə yönləndirir. Bu olmasa `/certificate/...`, `/yoxla`, `/panel` kimi bütün alt-səhifələr — və deməli **bütün QR kodlar** — 404 verərdi.
 3. Backend-də **`CORS_ORIGINS`** və **`FRONTEND_URL`** real Vercel ünvanı ilə yenilənib-yenilənmədiyini yoxlayın.

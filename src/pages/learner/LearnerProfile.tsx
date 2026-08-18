@@ -1,4 +1,5 @@
-import { DetailRow, PageHeader } from '../../components/ui';
+import { AccountSettings } from '../../components/AccountSettings';
+import { PageHeader } from '../../components/ui';
 import { useAuth } from '../../context/AuthContext';
 
 /** Bölmə 8 — müdavim menyusundakı "Profil" səhifəsi. */
@@ -9,16 +10,9 @@ export function LearnerProfile() {
 
   return (
     <>
-      <PageHeader title="Profil" description="Hesab məlumatlarınız." />
+      <PageHeader title="Profil" description="Hesab məlumatlarınız və təhlükəsizlik ayarları." />
 
-      <section className="card p-6">
-        <dl>
-          <DetailRow label="Ad" value={user.name} />
-          <DetailRow label="Soyad" value={user.surname} />
-          <DetailRow label="E-mail" value={user.email} />
-          <DetailRow label="Hesab növü" value="Müdavim / Məzun" />
-        </dl>
-      </section>
+      <AccountSettings />
 
       <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-5">
         <h2 className="text-sm font-semibold text-slate-900">E-mail ünvanınız niyə vacibdir?</h2>
