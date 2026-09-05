@@ -23,14 +23,14 @@ export function Home() {
   return (
     <>
       {/* Hero + axtarış */}
-      <section className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-3xl px-4 py-16 text-center sm:py-24">
+      <section className="paper border-b border-slate-200 bg-white">
+        <div className="mx-auto max-w-3xl px-4 py-14 text-center sm:px-6 sm:py-24">
           <p className="eyebrow justify-center">Sertifikatların vahid reyestri</p>
 
-          <h1 className="font-display mt-4 text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
+          <h1 className="font-display mt-4 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
             Sertifikatı yoxla
           </h1>
-          <p className="mx-auto mt-4 max-w-xl text-lg text-slate-600">
+          <p className="mx-auto mt-4 max-w-xl text-base text-slate-600 sm:text-lg">
             Sertifikat kodunu və ya e-mail ünvanını daxil edərək sənədin həqiqiliyini bir neçə
             saniyəyə təsdiqləyin. Bunun üçün hesab yaratmağa ehtiyac yoxdur.
           </p>
@@ -56,7 +56,7 @@ export function Home() {
           </form>
 
           {stats && (
-            <div className="mt-10 flex items-center justify-center gap-8 text-sm text-slate-500">
+            <div className="mt-10 flex items-center justify-center gap-6 text-sm text-slate-500 sm:gap-8">
               <div>
                 <span className="font-display block text-2xl font-semibold text-slate-900">
                   {stats.certificates.toLocaleString('az-AZ')}
@@ -76,9 +76,9 @@ export function Home() {
       </section>
 
       {/* Üç tərəf — bölmə 10 */}
-      <section className="border-b border-slate-200 bg-slate-50">
-        <div className="mx-auto max-w-5xl px-4 py-16">
-          <h2 className="font-display text-center text-2xl font-semibold text-slate-900">
+      <section className="paper border-b border-slate-200 bg-slate-50">
+        <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
+          <h2 className="font-display text-center text-xl font-semibold text-slate-900 sm:text-2xl">
             Sistem üç tərəf üzərində qurulub
           </h2>
           <p className="mx-auto mt-2 max-w-2xl text-center text-slate-600">
@@ -86,7 +86,7 @@ export function Home() {
             sertifikatı yoxlayır.
           </p>
 
-          <div className="mt-10 grid gap-8 sm:grid-cols-3">
+          <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 role: 'Issuer',
@@ -120,9 +120,9 @@ export function Home() {
       </section>
 
       {/* CTA */}
-      <section className="bg-white">
-        <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-16 text-center">
-          <h2 className="font-display text-2xl font-semibold text-slate-900">
+      <section className="paper bg-white">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-12 text-center sm:px-6 sm:py-16">
+          <h2 className="font-display text-xl font-semibold text-slate-900 sm:text-2xl">
             Təşkilatınız sertifikat verir?
           </h2>
           <p className="max-w-xl text-slate-600">

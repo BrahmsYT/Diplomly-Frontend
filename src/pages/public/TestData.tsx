@@ -67,10 +67,10 @@ export function TestData() {
   if (loading) return <PageLoader label="Bazanın vəziyyəti yoxlanılır..." />;
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-12">
+    <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6 sm:py-12">
       <span className="tag border-amber-200 bg-amber-50 text-amber-800">Demo səhifəsi</span>
 
-      <h1 className="font-display mt-4 text-3xl font-semibold tracking-tight text-slate-900">
+      <h1 className="font-display mt-4 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
         Sınaq məlumatları
       </h1>
       <p className="mt-2 text-slate-600">
@@ -91,7 +91,7 @@ export function TestData() {
 
       {/* Hesablar */}
       <div className="card mt-8 overflow-hidden">
-        <div className="border-b border-slate-100 px-6 py-4">
+        <div className="border-b border-slate-100 px-4 py-4 sm:px-6">
           <h2 className="font-semibold text-slate-900">Hesablar</h2>
         </div>
 
@@ -99,13 +99,13 @@ export function TestData() {
           {status?.accounts.map((account) => (
             <div
               key={account.email}
-              className="flex flex-col gap-2 px-6 py-4 sm:flex-row sm:items-center sm:justify-between"
+              className="flex flex-col gap-2 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6"
             >
               <div className="min-w-0">
                 <p className="text-xs font-medium uppercase tracking-wide text-brand-600">
                   {account.role}
                 </p>
-                <p className="mt-0.5 truncate font-mono text-sm text-slate-900">{account.email}</p>
+                <p className="mt-0.5 break-all font-mono text-sm text-slate-900">{account.email}</p>
                 <p className="text-xs text-slate-500">{account.label}</p>
               </div>
               <button
@@ -118,7 +118,7 @@ export function TestData() {
             </div>
           ))}
 
-          <div className="flex items-center justify-between bg-slate-50 px-6 py-4">
+          <div className="flex items-center justify-between gap-3 bg-slate-50 px-4 py-4 sm:px-6">
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
                 Şifrə (hamısı üçün)
@@ -140,7 +140,7 @@ export function TestData() {
 
       {/* Bazanın vəziyyəti */}
       <div className="card mt-6 p-6">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex items-center justify-between gap-3">
           <h2 className="font-semibold text-slate-900">Bazanın vəziyyəti</h2>
           <span
             className={`tag ${
@@ -220,7 +220,7 @@ export function TestData() {
             <Link
               key={code}
               to={`/yoxla?q=${encodeURIComponent(code)}`}
-              className="flex items-center justify-between rounded-lg border border-slate-200 px-4 py-2.5 transition-colors hover:border-brand-300 hover:bg-brand-50"
+              className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 px-4 py-3 transition-colors hover:border-brand-300 hover:bg-brand-50"
             >
               <span className="font-mono text-sm text-slate-900">{code}</span>
               <span className="text-xs text-slate-500">{label} →</span>

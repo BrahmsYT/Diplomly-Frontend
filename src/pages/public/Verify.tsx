@@ -47,8 +47,8 @@ export function Verify() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="font-display text-3xl font-semibold tracking-tight text-slate-900">
+    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-12">
+      <h1 className="font-display text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
         Sertifikatı yoxla
       </h1>
       <p className="mt-2 text-slate-600">
@@ -103,10 +103,10 @@ function VerifyResultView({ result }: { result: VerifyResult }) {
             <Link
               key={certificate.uniqueCode}
               to={`/certificate/${certificate.uniqueCode}`}
-              className="card flex items-center justify-between gap-4 p-4 transition-shadow hover:shadow-lift"
+              className="card flex flex-col gap-3 p-4 transition-shadow hover:shadow-lift sm:flex-row sm:items-center sm:justify-between sm:gap-4"
             >
               <div className="min-w-0">
-                <p className="truncate font-semibold text-slate-900">{certificate.courseName}</p>
+                <p className="font-semibold text-slate-900 sm:truncate">{certificate.courseName}</p>
                 <p className="mt-0.5 text-sm text-slate-500">
                   {certificate.organizationName} · {formatDate(certificate.issueDate)}
                 </p>
@@ -133,14 +133,16 @@ function VerifyResultView({ result }: { result: VerifyResult }) {
   return (
     <div className="card overflow-hidden">
       <div
-        className={`flex items-center gap-3 border-b px-6 py-5 ${
+        className={`flex items-center gap-3 border-b px-5 py-5 sm:px-6 ${
           isRevoked ? 'border-red-200 bg-red-50' : 'border-emerald-200 bg-emerald-50'
         }`}
       >
         {isRevoked ? <XIcon /> : <CheckIcon />}
         <div>
           <p
-            className={`text-lg font-semibold ${isRevoked ? 'text-red-800' : 'text-emerald-800'}`}
+            className={`text-base font-semibold sm:text-lg ${
+              isRevoked ? 'text-red-800' : 'text-emerald-800'
+            }`}
           >
             {result.message}
           </p>
@@ -154,7 +156,7 @@ function VerifyResultView({ result }: { result: VerifyResult }) {
 
       <CertificateDetails certificate={result.certificate} />
 
-      <div className="border-t border-slate-100 px-6 py-4">
+      <div className="border-t border-slate-100 px-5 py-4 sm:px-6">
         <Link
           to={`/certificate/${result.certificate.uniqueCode}`}
           className="text-sm font-medium text-brand-600 hover:text-brand-700"
@@ -181,14 +183,16 @@ function CertificateDetails({ certificate }: { certificate: PublicCertificate })
   if (certificate.grade) rows.splice(2, 0, ['Qiymət / nəticə', certificate.grade]);
 
   return (
-    <dl className="px-6 py-2">
+    <dl className="px-5 py-2 sm:px-6">
       {rows.map(([label, value]) => (
         <div
           key={label}
-          className="flex items-center justify-between gap-4 border-b border-slate-100 py-3 last:border-0"
+          className="flex flex-col gap-1 border-b border-slate-100 py-3 last:border-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
         >
-          <dt className="text-sm text-slate-500">{label}</dt>
-          <dd className="text-right text-sm font-medium text-slate-900">{value}</dd>
+          <dt className="shrink-0 text-sm text-slate-500">{label}</dt>
+          <dd className="min-w-0 break-words text-sm font-medium text-slate-900 sm:text-right">
+            {value}
+          </dd>
         </div>
       ))}
     </dl>
@@ -197,7 +201,7 @@ function CertificateDetails({ certificate }: { certificate: PublicCertificate })
 
 function NotFoundView({ message, hint }: { message: string; hint?: string }) {
   return (
-    <div className="card flex flex-col items-center px-6 py-14 text-center">
+    <div className="card flex flex-col items-center px-5 py-12 text-center sm:px-6 sm:py-14">
       <div className="mb-4 flex h-12 w-12 items-center justify-center rounded border border-slate-200 text-slate-400">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-6 w-6">
           <path

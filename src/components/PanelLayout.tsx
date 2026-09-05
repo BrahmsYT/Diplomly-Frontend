@@ -48,18 +48,58 @@ export function PanelLayout({ variant }: { variant: 'learner' | 'organization' }
     }
   }, [location.pathname]);
 
+  // Ekran lg-yə (1024px) genişlənəndə yan menyu daimi (static) olur — çekmece
+  // vəziyyəti açıq qalsaydı arxa fon kilidi masaüstündə də davam edərdi.
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const sync = () => {
+      if (mq.matches) setMenuOpen(false);
+    };
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+
+  // Mobil çekmece açıq ikən arxa fonun sürüşməsi bloklanır — əks halda menyunu
+  // sürüşdürərkən altdakı səhifə tərpənir. Escape də menyunu bağlayır.
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [menuOpen]);
+
+  // Səhifə dəyişəndə çekmece həmişə bağlanır (geri/irəli düymələri daxil olmaqla).
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
   const handleLogout = () => {
     logout();
     navigate('/');
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen">
       {/* Yan menyu */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 transform border-r border-slate-200 bg-white transition-transform lg:static lg:translate-x-0 ${
-          menuOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className={`fixed inset-y-0 left-0 z-50 flex w-[17rem] max-w-[85vw] transform flex-col
+          overflow-y-auto overscroll-contain border-r border-slate-200 bg-white
+          transition-transform duration-300 ease-out
+          lg:static lg:w-64 lg:max-w-none lg:translate-x-0 ${
+            menuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        aria-label="Panel menyusu"
       >
         <div className="flex h-16 items-center gap-2.5 border-b border-slate-200 px-5">
           <Link to="/" className="flex items-center gap-1">
@@ -127,18 +167,19 @@ export function PanelLayout({ variant }: { variant: 'learner' | 'organization' }
       )}
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-16 items-center gap-3 border-b border-slate-200 bg-white px-4 lg:hidden">
+        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-slate-200 bg-white/95 px-4 backdrop-blur lg:hidden">
           <button
             type="button"
             onClick={() => setMenuOpen(true)}
-            className="rounded-lg p-2 text-slate-600 hover:bg-slate-100"
+            className="-ml-1 rounded-lg p-2.5 text-slate-600 hover:bg-slate-100"
             aria-label="Menyunu aç"
+            aria-expanded={menuOpen}
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="h-5 w-5">
               <path strokeLinecap="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
-          <span className="font-semibold">{title}</span>
+          <span className="truncate font-semibold">{title}</span>
         </header>
 
         <main className="flex-1 p-4 sm:p-6 lg:p-8">

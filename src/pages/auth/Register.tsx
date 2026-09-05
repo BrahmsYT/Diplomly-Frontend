@@ -7,7 +7,7 @@ import { ApiError, authApi } from '../../lib/api';
 /** Qeydiyyat növünün seçilməsi. */
 export function RegisterChoice() {
   return (
-    <div className="mx-auto max-w-2xl px-4 py-16">
+    <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16">
       <div className="mb-10 text-center">
         <Logo className="mx-auto h-11 w-11" />
         <h1 className="font-display mt-4 text-2xl font-semibold text-slate-900">Qeydiyyatdan keçin</h1>
@@ -15,7 +15,7 @@ export function RegisterChoice() {
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Link to="/qeydiyyat/mudavim" className="card p-6 transition-colors hover:border-brand-300">
+        <Link to="/qeydiyyat/mudavim" className="card p-5 sm:p-6 transition-colors hover:border-brand-300">
           <div
             className="flex h-10 w-10 items-center justify-center rounded border border-brand-700 text-brand-700"
             aria-hidden="true"
@@ -32,7 +32,7 @@ export function RegisterChoice() {
           <span className="mt-4 inline-block text-sm font-medium text-brand-800">Davam et →</span>
         </Link>
 
-        <Link to="/qeydiyyat/teskilat" className="card p-6 transition-colors hover:border-brand-300">
+        <Link to="/qeydiyyat/teskilat" className="card p-5 sm:p-6 transition-colors hover:border-brand-300">
           <div
             className="flex h-10 w-10 items-center justify-center rounded border border-brand-700 text-brand-700"
             aria-hidden="true"
@@ -96,7 +96,7 @@ export function RegisterLearner() {
   };
 
   return (
-    <div className="mx-auto max-w-md px-4 py-12">
+    <div className="mx-auto max-w-md px-4 py-10 sm:px-6 sm:py-12">
       <div className="mb-8 text-center">
         <Logo className="mx-auto h-11 w-11" />
         <h1 className="font-display mt-4 text-2xl font-semibold text-slate-900">Müdavim qeydiyyatı</h1>
@@ -221,7 +221,7 @@ export function RegisterOrganization() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-12">
+    <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6 sm:py-12">
       <div className="mb-8 text-center">
         <Logo className="mx-auto h-11 w-11" />
         <h1 className="font-display mt-4 text-2xl font-semibold text-slate-900">Təşkilat qeydiyyatı</h1>
@@ -233,7 +233,7 @@ export function RegisterOrganization() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && <Alert>{error}</Alert>}
 
-        <section className="card p-6">
+        <section className="card p-5 sm:p-6">
           <h2 className="mb-4 text-base font-semibold text-slate-900">Şirkət məlumatları</h2>
           <div className="space-y-4">
             <Field
@@ -290,7 +290,7 @@ export function RegisterOrganization() {
           </div>
         </section>
 
-        <section className="card p-6">
+        <section className="card p-5 sm:p-6">
           <h2 className="mb-4 text-base font-semibold text-slate-900">Hesab sahibi</h2>
           <div className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">

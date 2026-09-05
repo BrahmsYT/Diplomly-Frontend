@@ -98,7 +98,7 @@ export function AccountSettings() {
   return (
     <div className="space-y-6">
       {/* --- Ad və soyad --- */}
-      <form onSubmit={handleProfile} className="card p-6">
+      <form onSubmit={handleProfile} className="card p-5 sm:p-6">
         <h2 className="mb-4 text-base font-semibold text-slate-900">Şəxsi məlumatlar</h2>
 
         {profileError && (
@@ -177,7 +177,7 @@ export function AccountSettings() {
       </form>
 
       {/* --- Şifrə --- */}
-      <form onSubmit={handlePassword} className="card p-6">
+      <form onSubmit={handlePassword} className="card p-5 sm:p-6">
         <h2 className="mb-1 text-base font-semibold text-slate-900">Şifrəni dəyiş</h2>
         <p className="mb-4 text-sm text-slate-500">
           Təhlükəsizlik üçün cari şifrənizi də daxil etməlisiniz.

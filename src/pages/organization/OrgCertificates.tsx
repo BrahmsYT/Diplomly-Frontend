@@ -87,7 +87,7 @@ export function OrgCertificates() {
               key={item.key}
               type="button"
               onClick={() => setStatus(item.key)}
-              className={`rounded-lg border px-3 py-1.5 text-sm font-medium ${
+              className={`rounded-lg border px-3 py-2 text-sm font-medium sm:py-1.5 ${
                 status === item.key
                   ? 'border-brand-700 bg-brand-700 text-white'
                   : 'border-slate-300 bg-white text-slate-600 hover:bg-slate-50'
@@ -124,48 +124,50 @@ export function OrgCertificates() {
         <>
           {/* Masaüstü: cədvəl */}
           <div className="card hidden overflow-hidden md:block">
-            <table className="w-full text-sm">
-              <thead className="border-b border-slate-200 bg-slate-50 text-left">
-                <tr>
-                  <th className="px-5 py-3 font-medium text-slate-600">Müdavim</th>
-                  <th className="px-5 py-3 font-medium text-slate-600">Kurs</th>
-                  <th className="px-5 py-3 font-medium text-slate-600">Kod</th>
-                  <th className="px-5 py-3 font-medium text-slate-600">Tarix</th>
-                  <th className="px-5 py-3 font-medium text-slate-600">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {items.map((certificate) => (
-                  <tr key={certificate.id} className="transition-colors hover:bg-slate-50">
-                    <td className="px-5 py-3.5">
-                      <Link
-                        to={`/teskilat/sertifikatlar/${certificate.uniqueCode}`}
-                        className="block"
-                      >
-                        <span className="font-medium text-slate-900">
-                          {certificate.learnerName}
-                        </span>
-                        <span className="block text-xs text-slate-500">
-                          {certificate.learnerEmail}
-                        </span>
-                      </Link>
-                    </td>
-                    <td className="px-5 py-3.5 text-slate-700">{certificate.courseName}</td>
-                    <td className="px-5 py-3.5">
-                      <span className="font-mono text-xs text-brand-700">
-                        {certificate.uniqueCode}
-                      </span>
-                    </td>
-                    <td className="px-5 py-3.5 text-slate-600">
-                      {formatDate(certificate.issueDate)}
-                    </td>
-                    <td className="px-5 py-3.5">
-                      <StatusBadge status={certificate.status} label={certificate.statusLabel} />
-                    </td>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[46rem] text-sm">
+                <thead className="border-b border-slate-200 bg-slate-50 text-left">
+                  <tr>
+                    <th className="px-5 py-3 font-medium text-slate-600">Müdavim</th>
+                    <th className="px-5 py-3 font-medium text-slate-600">Kurs</th>
+                    <th className="px-5 py-3 font-medium text-slate-600">Kod</th>
+                    <th className="px-5 py-3 font-medium text-slate-600">Tarix</th>
+                    <th className="px-5 py-3 font-medium text-slate-600">Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {items.map((certificate) => (
+                    <tr key={certificate.id} className="transition-colors hover:bg-slate-50">
+                      <td className="px-5 py-3.5">
+                        <Link
+                          to={`/teskilat/sertifikatlar/${certificate.uniqueCode}`}
+                          className="block"
+                        >
+                          <span className="font-medium text-slate-900">
+                            {certificate.learnerName}
+                          </span>
+                          <span className="block text-xs text-slate-500">
+                            {certificate.learnerEmail}
+                          </span>
+                        </Link>
+                      </td>
+                      <td className="px-5 py-3.5 text-slate-700">{certificate.courseName}</td>
+                      <td className="px-5 py-3.5">
+                        <span className="font-mono text-xs text-brand-700">
+                          {certificate.uniqueCode}
+                        </span>
+                      </td>
+                      <td className="px-5 py-3.5 text-slate-600">
+                        {formatDate(certificate.issueDate)}
+                      </td>
+                      <td className="px-5 py-3.5">
+                        <StatusBadge status={certificate.status} label={certificate.statusLabel} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           {/* Mobil: kartlar */}
@@ -192,26 +194,28 @@ export function OrgCertificates() {
           </div>
 
           {pagination && pagination.totalPages > 1 && (
-            <div className="mt-5 flex items-center justify-between">
-              <button
-                type="button"
-                onClick={() => setPage((prev) => Math.max(1, prev - 1))}
-                disabled={page === 1}
-                className="btn-secondary"
-              >
-                ← Əvvəlki
-              </button>
-              <span className="text-sm text-slate-500">
+            <div className="mt-5 flex flex-col-reverse items-center gap-3 sm:flex-row sm:justify-between">
+              <span className="text-sm text-slate-500 sm:order-2">
                 Səhifə {pagination.page} / {pagination.totalPages}
               </span>
-              <button
-                type="button"
-                onClick={() => setPage((prev) => Math.min(pagination.totalPages, prev + 1))}
-                disabled={page >= pagination.totalPages}
-                className="btn-secondary"
-              >
-                Növbəti →
-              </button>
+              <div className="flex w-full gap-2 sm:contents">
+                <button
+                  type="button"
+                  onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+                  disabled={page === 1}
+                  className="btn-secondary flex-1 sm:order-1 sm:flex-none"
+                >
+                  ← Əvvəlki
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPage((prev) => Math.min(pagination.totalPages, prev + 1))}
+                  disabled={page >= pagination.totalPages}
+                  className="btn-secondary flex-1 sm:order-3 sm:flex-none"
+                >
+                  Növbəti →
+                </button>
+              </div>
             </div>
           )}
         </>

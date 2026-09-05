@@ -112,9 +112,9 @@ export function StatCard({
   }[accent];
 
   return (
-    <div className="card p-5">
+    <div className="card p-4 sm:p-5">
       <p className="text-sm font-medium text-slate-500">{label}</p>
-      <p className={`mt-2 text-3xl font-semibold tabular-nums ${accents}`}>{value}</p>
+      <p className={`mt-2 text-2xl font-semibold tabular-nums sm:text-3xl ${accents}`}>{value}</p>
       {hint && <p className="mt-1 text-xs text-slate-400">{hint}</p>}
     </div>
   );
@@ -132,7 +132,7 @@ export function EmptyState({
   icon?: ReactNode;
 }) {
   return (
-    <div className="card flex flex-col items-center justify-center px-6 py-16 text-center">
+    <div className="card flex flex-col items-center justify-center px-5 py-12 text-center sm:px-6 sm:py-16">
       <div className="mb-4 flex h-12 w-12 items-center justify-center rounded border border-slate-200 text-slate-400">
         {icon ?? <DocumentIcon className="h-6 w-6" />}
       </div>
@@ -155,7 +155,7 @@ export function PageHeader({
   return (
     <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <h1 className="font-display text-2xl font-semibold text-slate-900">{title}</h1>
+        <h1 className="font-display text-xl font-semibold text-slate-900 sm:text-2xl">{title}</h1>
         {description && <p className="mt-1 text-sm text-slate-500">{description}</p>}
       </div>
       {action}
@@ -166,9 +166,11 @@ export function PageHeader({
 /** Detal səhifələrində "etiket → dəyər" sətri. */
 export function DetailRow({ label, value }: { label: string; value: ReactNode }) {
   return (
-    <div className="flex flex-col gap-1 border-b border-slate-100 py-3 last:border-0 sm:flex-row sm:items-center sm:justify-between">
-      <dt className="text-sm text-slate-500">{label}</dt>
-      <dd className="text-sm font-medium text-slate-900 sm:text-right">{value ?? '—'}</dd>
+    <div className="flex flex-col gap-1 border-b border-slate-100 py-3 last:border-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+      <dt className="shrink-0 text-sm text-slate-500">{label}</dt>
+      <dd className="min-w-0 break-words text-sm font-medium text-slate-900 sm:text-right">
+        {value ?? '—'}
+      </dd>
     </div>
   );
 }

@@ -150,7 +150,7 @@ export function EditCertificate() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && <Alert>{error}</Alert>}
 
-        <section className="card p-6">
+        <section className="card p-5 sm:p-6">
           <h2 className="mb-4 text-base font-semibold text-slate-900">Müdavim</h2>
           <div className="space-y-4">
             <div>
@@ -190,7 +190,7 @@ export function EditCertificate() {
           </div>
         </section>
 
-        <section className="card p-6">
+        <section className="card p-5 sm:p-6">
           <h2 className="mb-4 text-base font-semibold text-slate-900">Kurs</h2>
           <div className="space-y-4">
             <div>
@@ -231,7 +231,7 @@ export function EditCertificate() {
           </div>
         </section>
 
-        <section className="card p-6">
+        <section className="card p-5 sm:p-6">
           <h2 className="mb-4 text-base font-semibold text-slate-900">Tarixlər</h2>
           <div className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">

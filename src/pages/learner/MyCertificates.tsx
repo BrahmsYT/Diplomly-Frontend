@@ -84,7 +84,7 @@ export function MyCertificates() {
               key={item.key}
               type="button"
               onClick={() => setFilter(item.key)}
-              className={`rounded-lg border px-3 py-1.5 text-sm font-medium ${
+              className={`rounded-lg border px-3 py-2 text-sm font-medium sm:py-1.5 ${
                 filter === item.key
                   ? 'border-brand-700 bg-brand-700 text-white'
                   : 'border-slate-300 bg-white text-slate-600 hover:bg-slate-50'

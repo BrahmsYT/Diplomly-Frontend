@@ -132,7 +132,7 @@ export function NewCertificate() {
       <>
         <PageHeader title="Sertifikat yaradıldı" />
 
-        <div className="card p-6">
+        <div className="card p-5 sm:p-6">
           <div className="mb-6 flex items-center gap-3 border-l-4 border-emerald-600 bg-emerald-50 px-4 py-3">
             <svg
               viewBox="0 0 24 24"
@@ -232,7 +232,7 @@ export function NewCertificate() {
         {error && <Alert>{error}</Alert>}
 
         {/* Müdavim məlumatları */}
-        <section className="card p-6">
+        <section className="card p-5 sm:p-6">
           <h2 className="mb-4 text-base font-semibold text-slate-900">Müdavim məlumatları</h2>
 
           <div>
@@ -332,7 +332,7 @@ export function NewCertificate() {
         </section>
 
         {/* Kurs məlumatları */}
-        <section className="card p-6">
+        <section className="card p-5 sm:p-6">
           <h2 className="mb-4 text-base font-semibold text-slate-900">Kurs məlumatları</h2>
 
           {coursesLoading ? (
@@ -413,7 +413,7 @@ export function NewCertificate() {
         </section>
 
         {/* Sertifikat məlumatları */}
-        <section className="card p-6">
+        <section className="card p-5 sm:p-6">
           <h2 className="mb-4 text-base font-semibold text-slate-900">Sertifikat məlumatları</h2>
 
           <div className="space-y-4">

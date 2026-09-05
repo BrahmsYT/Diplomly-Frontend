@@ -55,13 +55,13 @@ export function LearnerDashboard() {
         </div>
       )}
 
-      <div className="mb-8 grid gap-4 sm:grid-cols-3">
+      <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
         <StatCard label="Ümumi sertifikat" value={stats?.total ?? 0} />
         <StatCard label="Aktiv" value={stats?.active ?? 0} accent="emerald" />
         <StatCard label="Müddəti bitib" value={stats?.expired ?? 0} accent="amber" />
       </div>
 
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex items-center justify-between gap-3">
         <h2 className="text-lg font-semibold text-slate-900">Son sertifikatlar</h2>
         {certificates.length > 0 && (
           <Link

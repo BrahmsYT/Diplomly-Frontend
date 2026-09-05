@@ -3,12 +3,36 @@
 @tailwind utilities;
 
 @layer base {
+  /*
+   * Kağız dənəvərliyi — SVG feTurbulence ilə yaradılmış incə "grain".
+   * Ayrıca şəkil faylı yoxdur: 160x160 tikişsiz (stitchTiles) naxış təkrarlanır,
+   * ona görə istənilən ölçüdə eyni görünür və şəbəkədən heç nə yüklənmir.
+   *
+   * feComponentTransfer səs-küyü [0.80, 1.00] aralığına sıxır, `multiply` isə
+   * onu fon rəngi ilə birləşdirir: ən açıq nöqtələr 1.0-a kəsilib fonu olduğu
+   * kimi saxlayır, yalnız incə tünd zərrəciklər qalır.
+   * Ölçülüb: fon cəmi 3-4 vahid tündləşir, dənənin std sapması ~3.
+   * Diqqət: `soft-light`/`overlay` ağ səthdə ümumiyyətlə işləmir (255 sabit
+   * qalır), ona görə məhz `multiply` seçilib.
+   */
+  :root {
+    --paper: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='160'%20height='160'%3E%3Cfilter%20id='p'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.8'%20numOctaves='4'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR%20type='linear'%20slope='0.35'%20intercept='0.8'/%3E%3CfeFuncG%20type='linear'%20slope='0.35'%20intercept='0.8'/%3E%3CfeFuncB%20type='linear'%20slope='0.35'%20intercept='0.8'/%3E%3CfeFuncA%20type='discrete'%20tableValues='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect%20width='160'%20height='160'%20filter='url%28%23p%29'/%3E%3C/svg%3E");
+    --paper-size: 160px 160px;
+  }
+
   html {
     -webkit-font-smoothing: antialiased;
+    /* Mobil brauzerlərdə sticky başlıq altında lövbər (#id) keçidləri kəsilməsin. */
+    scroll-padding-top: 5rem;
   }
 
   body {
     @apply bg-slate-50 text-slate-900;
+    /* Uzun kod/e-mail/URL sətirləri dar ekranda qutudan kənara çıxmasın. */
+    overflow-wrap: break-word;
+    background-image: var(--paper);
+    background-size: var(--paper-size);
+    background-blend-mode: multiply;
   }
 
   /* Hər link/düymədə hover-fokus rəng dəyişimi yumşaq keçsin — sərt "snap" olmasın. */
@@ -25,8 +49,9 @@
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded px-4 py-2.5 text-sm font-medium
-           transition-colors disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex min-h-[2.75rem] items-center justify-center gap-2 rounded px-4 py-2.5
+           text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60
+           sm:min-h-0;
   }
 
   .btn-primary {
@@ -42,9 +67,10 @@
   }
 
   .input {
-    @apply w-full rounded border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900
+    @apply w-full rounded border border-slate-300 bg-white px-3.5 py-2.5 text-base text-slate-900
            transition-shadow placeholder:text-slate-400 focus:border-brand-600 focus:outline-none
-           focus:ring-1 focus:ring-brand-600/20 disabled:bg-slate-50 disabled:text-slate-500;
+           focus:ring-1 focus:ring-brand-600/20 disabled:bg-slate-50 disabled:text-slate-500
+           sm:text-sm;
   }
 
   .label {
@@ -62,6 +88,13 @@
   /* Small rectangular status tag — deliberately not a pill. */
   .tag {
     @apply inline-flex items-center gap-1.5 rounded-sm border px-2 py-0.5 text-xs font-medium;
+  }
+
+  /* Öz fon rəngi olan tam enli bölmələr üçün eyni kağız dənəsi. */
+  .paper {
+    background-image: var(--paper);
+    background-size: var(--paper-size);
+    background-blend-mode: multiply;
   }
 
   /* Uppercase kicker line used above headings instead of a badge pill. */

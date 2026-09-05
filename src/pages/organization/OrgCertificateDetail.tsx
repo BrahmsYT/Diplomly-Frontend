@@ -107,7 +107,7 @@ export function OrgCertificateDetail() {
 
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">{certificate.learnerName}</h1>
+          <h1 className="text-xl font-semibold text-slate-900 sm:text-2xl">{certificate.learnerName}</h1>
           <p className="mt-1 text-slate-500">{certificate.courseName}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -179,7 +179,7 @@ export function OrgCertificateDetail() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <section className="card p-6">
+        <section className="card p-5 sm:p-6">
           <h2 className="mb-2 text-base font-semibold text-slate-900">Məlumatlar</h2>
           <dl>
             <DetailRow label="Müdavim" value={certificate.learnerName} />
@@ -208,7 +208,7 @@ export function OrgCertificateDetail() {
         </section>
 
         {/* Bölmə 4.8 — ləğv etmə */}
-        <section className="card p-6">
+        <section className="card p-5 sm:p-6">
           <h2 className="mb-1 text-base font-semibold text-slate-900">Sertifikatı ləğv et</h2>
           <p className="mb-4 text-sm leading-relaxed text-slate-500">
             Səhv və ya etibarsız sertifikatı deaktiv edin. Qeyd bazadan{' '}

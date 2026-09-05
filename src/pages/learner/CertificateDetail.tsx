@@ -134,7 +134,7 @@ export function CertificateDetail() {
 
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">{certificate.courseName}</h1>
+          <h1 className="text-xl font-semibold text-slate-900 sm:text-2xl">{certificate.courseName}</h1>
           <p className="mt-1 text-slate-500">{certificate.organizationName}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -222,7 +222,7 @@ export function CertificateDetail() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Bölmə 3.4 — məlumatlar */}
-        <section className="card p-6">
+        <section className="card p-5 sm:p-6">
           <h2 className="mb-2 text-base font-semibold text-slate-900">Sertifikat məlumatları</h2>
           <dl>
             <DetailRow label="Sertifikat sahibi" value={certificate.learnerName} />
@@ -251,7 +251,7 @@ export function CertificateDetail() {
 
         <div className="space-y-6">
           {/* Bölmə 3.6 — paylaşma */}
-          <section className="card p-6">
+          <section className="card p-5 sm:p-6">
             <h2 className="mb-1 text-base font-semibold text-slate-900">Sertifikatı paylaş</h2>
             <p className="mb-4 text-sm text-slate-500">
               Bu linki açan istənilən şəxs sertifikatın həqiqiliyini görə bilər.
@@ -306,7 +306,7 @@ export function CertificateDetail() {
           </section>
 
           {/* Bölmə 3.5 — görünürlük ayarı */}
-          <section className="card p-6">
+          <section className="card p-5 sm:p-6">
             <h2 className="mb-1 text-base font-semibold text-slate-900">Görünürlük</h2>
             <p className="mb-4 text-sm text-slate-500">
               Sertifikatın ümumi axtarışda necə görünəcəyini seçin.

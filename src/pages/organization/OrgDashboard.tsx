@@ -43,7 +43,7 @@ export function OrgDashboard() {
         </div>
       )}
 
-      <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="mb-8 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
         <StatCard label="Ümumi sertifikat" value={stats?.total ?? 0} />
         <StatCard label="Bu ay" value={stats?.thisMonth ?? 0} accent="brand" />
         <StatCard label="Aktiv" value={stats?.active ?? 0} accent="emerald" />
@@ -51,7 +51,7 @@ export function OrgDashboard() {
         <StatCard label="Ləğv edilib" value={stats?.revoked ?? 0} accent="red" />
       </div>
 
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex items-center justify-between gap-3">
         <h2 className="text-lg font-semibold text-slate-900">Son verilən sertifikatlar</h2>
         <Link
           to="/teskilat/sertifikatlar"
@@ -77,7 +77,7 @@ export function OrgDashboard() {
             <Link
               key={item.uniqueCode}
               to={`/teskilat/sertifikatlar/${item.uniqueCode}`}
-              className="flex items-center justify-between gap-4 px-5 py-4 transition-colors hover:bg-slate-50"
+              className="flex items-center justify-between gap-3 px-4 py-4 transition-colors hover:bg-slate-50 sm:gap-4 sm:px-5"
             >
               <div className="min-w-0">
                 <p className="truncate font-medium text-slate-900">{item.learnerName}</p>

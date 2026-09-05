@@ -92,7 +92,7 @@ export function OrgProfile() {
         {error && <Alert>{error}</Alert>}
         {saved && <Alert variant="success">Məlumatlar yadda saxlanıldı.</Alert>}
 
-        <section className="card p-6">
+        <section className="card p-5 sm:p-6">
           <h2 className="mb-4 text-base font-semibold text-slate-900">Ümumi məlumatlar</h2>
           <div className="space-y-4">
             <Field
@@ -128,7 +128,7 @@ export function OrgProfile() {
           </div>
         </section>
 
-        <section className="card p-6">
+        <section className="card p-5 sm:p-6">
           <h2 className="mb-1 text-base font-semibold text-slate-900">Sertifikat görünüşü</h2>
           <p className="mb-4 text-sm text-slate-500">
             Bu məlumatlar verdiyiniz hər sertifikatın üzərində göstərilir.
@@ -144,7 +144,7 @@ export function OrgProfile() {
             />
 
             {form.logo && (
-              <div className="flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
+              <div className="flex flex-wrap items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
                 <img
                   src={form.logo}
                   alt="Loqo"

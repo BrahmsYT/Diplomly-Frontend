@@ -107,7 +107,7 @@ export function Courses() {
             minLength={2}
             maxLength={160}
           />
-          <button type="submit" className="btn-primary shrink-0" disabled={busy === 'create'}>
+          <button type="submit" className="btn-primary sm:shrink-0" disabled={busy === 'create'}>
             {busy === 'create' && <Spinner className="h-4 w-4" />}
             Əlavə et
           </button>
@@ -122,40 +122,42 @@ export function Courses() {
       ) : (
         <div className="card divide-y divide-slate-100">
           {courses.map((course) => (
-            <div key={course.id} className="flex items-center gap-4 px-5 py-4">
+            <div key={course.id} className="px-4 py-4 sm:px-5">
               {editingId === course.id ? (
-                <>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                   <input
                     value={editingName}
                     onChange={(event) => setEditingName(event.target.value)}
-                    className="input flex-1"
+                    className="input sm:flex-1"
                     autoFocus
                     onKeyDown={(event) => {
                       if (event.key === 'Enter') void handleUpdate(course.id);
                       if (event.key === 'Escape') setEditingId(null);
                     }}
                   />
-                  <button
-                    type="button"
-                    onClick={() => handleUpdate(course.id)}
-                    className="btn-primary shrink-0"
-                    disabled={busy === course.id}
-                  >
-                    Yadda saxla
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setEditingId(null)}
-                    className="btn-secondary shrink-0"
-                  >
-                    İmtina
-                  </button>
-                </>
+                  <div className="flex gap-2 sm:shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => handleUpdate(course.id)}
+                      className="btn-primary flex-1 sm:flex-none"
+                      disabled={busy === course.id}
+                    >
+                      Yadda saxla
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditingId(null)}
+                      className="btn-secondary flex-1 sm:flex-none"
+                    >
+                      İmtina
+                    </button>
+                  </div>
+                </div>
               ) : (
-                <>
+                <div className="flex items-center gap-3 sm:gap-4">
                   <div className="min-w-0 flex-1">
-                    <p className="truncate font-medium text-slate-900">{course.name}</p>
-                    <p className="text-xs text-slate-500">
+                    <p className="break-words font-medium text-slate-900">{course.name}</p>
+                    <p className="mt-0.5 text-xs text-slate-500">
                       {course.certificateCount} sertifikat verilib
                     </p>
                   </div>
@@ -166,7 +168,7 @@ export function Courses() {
                       setEditingId(course.id);
                       setEditingName(course.name);
                     }}
-                    className="shrink-0 text-sm font-medium text-slate-500 hover:text-slate-700"
+                    className="shrink-0 px-1 py-2 text-sm font-medium text-slate-500 hover:text-slate-700"
                   >
                     Dəyiş
                   </button>
@@ -175,13 +177,13 @@ export function Courses() {
                     <button
                       type="button"
                       onClick={() => handleDelete(course)}
-                      className="shrink-0 text-sm font-medium text-red-500 hover:text-red-700"
+                      className="shrink-0 px-1 py-2 text-sm font-medium text-red-500 hover:text-red-700"
                       disabled={busy === course.id}
                     >
                       Sil
                     </button>
                   )}
-                </>
+                </div>
               )}
             </div>
           ))}
