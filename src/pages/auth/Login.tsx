@@ -90,18 +90,21 @@ export function Login() {
         </Link>
       </p>
 
-      <div className="mt-8 rounded-lg border border-slate-200 bg-slate-50 p-4 text-xs text-slate-500">
-        <p className="mb-1.5 font-medium text-slate-600">Sınaq hesabları:</p>
-        <p>Təşkilat: admin@abcacademy.az</p>
-        <p>Müdavim: saleh@example.com</p>
-        <p className="mt-1">Şifrə (hər ikisi üçün): parol123</p>
-        <Link
-          to="/test"
-          className="mt-2.5 inline-block font-medium text-brand-600 hover:text-brand-700"
-        >
-          Baza boşdursa → nümunə məlumatları yarat
-        </Link>
-      </div>
+      {/*
+        CRIT-01 (pentest, sent. 2026) — burada sınaq hesablarının e-maili və ortaq
+        parolu ("parol123") ictimai giriş səhifəsində sabit mətn kimi yazılmışdı.
+        Hesab ünvanları artıq burada saxlanmır: /test səhifəsi onları
+        `testApi.status()` ilə canlı çəkir, ona görə bu təkrar həm lazımsız idi,
+        həm də seed məlumatı dəyişəndə köhnəlib yanlış məlumat verirdi.
+        Link özü də yalnız development-də görünür.
+      */}
+      {import.meta.env.DEV && (
+        <p className="mt-8 text-center text-xs text-slate-500">
+          <Link to="/test" className="font-medium text-brand-600 hover:text-brand-700">
+            Sınaq hesabları və nümunə məlumatlar
+          </Link>
+        </p>
+      )}
     </div>
   );
 }

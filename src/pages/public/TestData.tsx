@@ -123,13 +123,15 @@ export function TestData() {
               <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
                 Şifrə (hamısı üçün)
               </p>
+              {/* Parol yalnız API-dən gəlir — koda sabit yazılmır (CRIT-01). */}
               <p className="mt-0.5 font-mono text-sm font-semibold text-slate-900">
-                {status?.password ?? 'parol123'}
+                {status?.password ?? '—'}
               </p>
             </div>
             <button
               type="button"
-              onClick={() => handleCopy(status?.password ?? 'parol123')}
+              onClick={() => status?.password && handleCopy(status.password)}
+              disabled={!status?.password}
               className="btn-secondary shrink-0 py-1.5 text-xs"
             >
               {copied === status?.password ? 'Kopyalandı ✓' : 'Kopyala'}

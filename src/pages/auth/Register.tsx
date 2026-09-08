@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Alert, Logo, Spinner } from '../../components/ui';
 import { useAuth } from '../../context/AuthContext';
 import { ApiError, authApi } from '../../lib/api';
+import { NAME_PATTERN, NAME_TITLE } from '../../lib/validation';
 
 /** Qeydiyyat növünün seçilməsi. */
 export function RegisterChoice() {
@@ -117,6 +118,8 @@ export function RegisterLearner() {
             autoComplete="given-name"
             minLength={2}
             maxLength={80}
+            pattern={NAME_PATTERN}
+            title={NAME_TITLE}
           />
           <Field
             label="Soyad"
@@ -126,6 +129,8 @@ export function RegisterLearner() {
             autoComplete="family-name"
             minLength={2}
             maxLength={80}
+            pattern={NAME_PATTERN}
+            title={NAME_TITLE}
           />
         </div>
 
@@ -258,7 +263,7 @@ export function RegisterOrganization() {
                 value={org.email}
                 onChange={updateOrg('email')}
                 error={fieldErrors['organization.email']}
-                placeholder="info@abcacademy.az"
+                placeholder="info@example.com"
               />
               <Field
                 label="Telefon"
@@ -275,7 +280,7 @@ export function RegisterOrganization() {
               onChange={updateOrg('website')}
               error={fieldErrors['organization.website']}
               required={false}
-              placeholder="https://abcacademy.az"
+              placeholder="https://example.com"
             />
 
             <Field
@@ -284,7 +289,7 @@ export function RegisterOrganization() {
               onChange={updateOrg('logo')}
               error={fieldErrors['organization.logo']}
               required={false}
-              placeholder="https://abcacademy.az/logo.png"
+              placeholder="https://example.com/logo.png"
               hint="Sertifikatın üzərində göstərilir. Sonradan da əlavə edə bilərsiniz."
             />
           </div>
@@ -372,6 +377,8 @@ interface FieldProps {
   /** Brauzerin öz yoxlaması — serverə getmədən dərhal xəbərdarlıq verir. */
   minLength?: number;
   maxLength?: number;
+  pattern?: string;
+  title?: string;
 }
 
 function Field({
@@ -386,6 +393,8 @@ function Field({
   autoComplete,
   minLength,
   maxLength,
+  pattern,
+  title,
 }: FieldProps) {
   const id = `field-${label.replace(/\s+/g, '-').toLowerCase()}`;
 
@@ -406,6 +415,8 @@ function Field({
         autoComplete={autoComplete}
         minLength={minLength}
         maxLength={maxLength}
+        pattern={pattern}
+        title={title}
       />
       {error ? (
         <p className="field-error">{error}</p>

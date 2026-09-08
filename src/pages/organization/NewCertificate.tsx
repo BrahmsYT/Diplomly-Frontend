@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Alert, PageHeader, Spinner } from '../../components/ui';
 import { ApiError, certificateApi, orgApi } from '../../lib/api';
+import { NAME_PATTERN, NAME_TITLE } from '../../lib/validation';
 import { toDateInputValue } from '../../lib/format';
 import type { Certificate, Course, LearnerLookup } from '../../types';
 
@@ -307,6 +308,8 @@ export function NewCertificate() {
                   required
                   minLength={2}
                   maxLength={80}
+                  pattern={NAME_PATTERN}
+                  title={NAME_TITLE}
                 />
                 {fieldErrors.learnerName && <p className="field-error">{fieldErrors.learnerName}</p>}
               </div>
@@ -322,6 +325,8 @@ export function NewCertificate() {
                   required
                   minLength={2}
                   maxLength={80}
+                  pattern={NAME_PATTERN}
+                  title={NAME_TITLE}
                 />
                 {fieldErrors.learnerSurname && (
                   <p className="field-error">{fieldErrors.learnerSurname}</p>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Alert, Spinner } from './ui';
 import { useAuth } from '../context/AuthContext';
 import { ApiError, authApi } from '../lib/api';
+import { NAME_PATTERN, NAME_TITLE } from '../lib/validation';
 
 /**
  * Hesab ayarları: ad/soyadın yenilənməsi və şifrənin dəyişdirilməsi.
@@ -128,6 +129,8 @@ export function AccountSettings() {
               required
               minLength={2}
               maxLength={80}
+              pattern={NAME_PATTERN}
+              title={NAME_TITLE}
               autoComplete="given-name"
             />
             {profileErrors.name && <p className="field-error">{profileErrors.name}</p>}
@@ -148,6 +151,8 @@ export function AccountSettings() {
               required
               minLength={2}
               maxLength={80}
+              pattern={NAME_PATTERN}
+              title={NAME_TITLE}
               autoComplete="family-name"
             />
             {profileErrors.surname && <p className="field-error">{profileErrors.surname}</p>}

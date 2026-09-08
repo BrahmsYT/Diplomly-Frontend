@@ -21,9 +21,16 @@ const Verify = lazy(() => import('./pages/public/Verify').then((m) => ({ default
 const PublicCertificatePage = lazy(() =>
   import('./pages/public/PublicCertificate').then((m) => ({ default: m.PublicCertificatePage })),
 );
-const TestData = lazy(() =>
-  import('./pages/public/TestData').then((m) => ({ default: m.TestData })),
-);
+/**
+ * CRIT-01 (pentest, sent. 2026) — demo səhifəsi sınaq hesablarının e-mailini və
+ * ortaq parolunu göstərir, həmçinin `/api/test/seed` çağırıb bazanı sıfırlayır.
+ * Production-da bunun ictimai olmasına ehtiyac yoxdur, ona görə marşrut yalnız
+ * development-də qeydiyyatdan keçir. `import.meta.env.DEV` build zamanı `false`
+ * sabitinə çevrilir, beləliklə səhifə production bundle-ına ümumiyyətlə düşmür.
+ */
+const TestData = import.meta.env.DEV
+  ? lazy(() => import('./pages/public/TestData').then((m) => ({ default: m.TestData })))
+  : null;
 const About = lazy(() => import('./pages/public/Info').then((m) => ({ default: m.About })));
 const ForOrganizations = lazy(() =>
   import('./pages/public/Info').then((m) => ({ default: m.ForOrganizations })),
@@ -97,8 +104,8 @@ export default function App() {
               {/* Bölmə 3.6 — paylaşılan sertifikat linki, QR kod bura yönləndirir */}
               <Route path="certificate/:code" element={<PublicCertificatePage />} />
 
-              {/* Demo: sınaq hesabları + nümunə məlumatların yaradılması */}
-              <Route path="test" element={<TestData />} />
+              {/* Demo: sınaq hesabları + nümunə məlumatlar — yalnız development-də */}
+              {TestData && <Route path="test" element={<TestData />} />}
 
               <Route path="daxil-ol" element={<Login />} />
               <Route path="qeydiyyat" element={<RegisterChoice />} />

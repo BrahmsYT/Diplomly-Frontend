@@ -49,9 +49,16 @@ export function Home() {
                 Yoxla
               </button>
             </div>
+            {/*
+              CRIT-01 (pentest, sent. 2026) — burada real seed hesabının ünvanı
+              (saleh@example.com) "nümunə" kimi göstərilirdi. Bu, hər ziyarətçiyə
+              işlək hesab ünvanını hazır verirdi. İndi yalnız FORMAT nümunəsidir:
+              sertifikat kodu ictimaidir (QR/paylaşma linki onsuz da onu açır),
+              e-mail isə uydurma example.com domenindədir.
+            */}
             <p className="mt-3 text-xs text-slate-500">
-              Nümunə: <code className="font-mono text-brand-800">DPL-000001</code> və ya{' '}
-              <code className="font-mono text-brand-800">saleh@example.com</code>
+              Format: <code className="font-mono text-brand-800">DPL-000001</code> və ya{' '}
+              <code className="font-mono text-brand-800">ad@example.com</code>
             </p>
           </form>
 
