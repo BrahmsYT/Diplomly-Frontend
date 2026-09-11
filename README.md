@@ -38,6 +38,7 @@ Sayt `/api` sorğularını Vite proxy vasitəsilə backend-ə yönləndirir, ona
 | `BACKEND_PORT` | **Vite dev serveri** | Proxy-nin hədəf portu. `backend/.env` faylındakı `PORT` ilə eyni olmalıdır. Brauzerə çatmır, production-da istifadə olunmur. |
 | `VITE_API_URL` | **Brauzer** | Production-da API-nin tam ünvanı. Development-də boş saxlanılır. |
 | `VITE_SAME_ORIGIN` | Vite build | Frontend və backend eyni domendədirsə (reverse proxy) `true` edin — `VITE_API_URL` yoxlaması keçilir. |
+| `VITE_TEST_SEED_SECRET` | **Brauzer** | Opsional. Yalnız backend-də `TEST_SEED_SECRET` təyin edilibsə lazımdır (CRIT-01 qorunması) — eyni dəyər olmalıdır, əks halda `/test` səhifəsi 403 alar. |
 
 ### Frontend backend-in ünvanını haradan bilir?
 
@@ -233,6 +234,19 @@ Təkrarlanan siniflər [`src/index.css`](src/index.css) faylında toplanıb:
 Ümumi komponentlər [`src/components/ui.tsx`](src/components/ui.tsx) faylındadır: `StatCard`, `StatusBadge`, `AcceptanceBadge`, `Alert`, `Spinner`, `PageLoader`, `EmptyState`, `PageHeader`, `DetailRow`, `Logo`.
 
 Bütün panellər və cədvəllər mobil üçün uyğunlaşdırılıb — cədvəllər kiçik ekranda kart görünüşünə keçir.
+
+---
+
+## Təhlükəsizlik
+
+Xarici pentest hesabatının (sentyabr 2026) frontend tərəfə aid iki tapıntısı:
+
+- **MED-01 — CSP və təhlükəsizlik başlıqları yox idi.** [`vercel.json`](vercel.json) indi tam Content-Security-Policy, `X-Frame-Options`, `Permissions-Policy`, `Cross-Origin-Opener-Policy` müəyyən edir. `connect-src` yalnız `https://diplomly-backend.onrender.com`-a icazə verir.
+- **CRIT-02 — ad sahələri ixtiyari HTML/JS qəbul edirdi (stored XSS).** [`src/lib/validation.ts`](src/lib/validation.ts) qeydiyyat, sertifikat və profil formalarında `pattern`/`title` atributları ilə dərhal xəbərdarlıq verir.
+
+  **Diqqət:** bu YALNIZ istifadəçi rahatlığı üçündür — brauzerin `pattern` atributu təhlükəsizlik sərhədi deyil, hücumçu API-yə birbaşa sorğu göndərib asanlıqla keçə bilər. Əsl müdafiə backend-dədir ([`Diplomly-Backend/src/lib/validators.ts`](https://github.com/BrahmsYT/Diplomly-Backend/blob/main/src/lib/validators.ts)). Bundan başqa React JSX interpolyasiyası mətn məzmununu avtomatik HTML-kodlaşdırır — kodda `dangerouslySetInnerHTML` istifadə olunmur.
+
+Qalan 7 tapıntı (backend/infrastruktur tərəfi) və qəbul edilmiş qalıq risklər üçün: [Diplomly-Backend README → Təhlükəsizlik düzəlişləri](https://github.com/BrahmsYT/Diplomly-Backend#təhlükəsizlik-düzəlişləri-pentest-hesabatı-sentyabr-2026).
 
 ---
 

@@ -101,9 +101,9 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   return (body.data !== undefined ? body.data : (body as unknown)) as T;
 }
 
-const get = <T>(path: string) => request<T>(path);
-const post = <T>(path: string, body?: unknown) =>
-  request<T>(path, { method: 'POST', body: body ? JSON.stringify(body) : undefined });
+const get = <T>(path: string, headers?: HeadersInit) => request<T>(path, { headers });
+const post = <T>(path: string, body?: unknown, headers?: HeadersInit) =>
+  request<T>(path, { method: 'POST', body: body ? JSON.stringify(body) : undefined, headers });
 const put = <T>(path: string, body: unknown) =>
   request<T>(path, { method: 'PUT', body: JSON.stringify(body) });
 const patch = <T>(path: string, body: unknown) =>
@@ -232,9 +232,20 @@ export interface SeedResult {
   password: string;
 }
 
+/**
+ * TEST_SEED_SECRET backend-də (CRIT-01 qorunması) təyin edilibsə, bura da
+ * eyni dəyər VITE_TEST_SEED_SECRET kimi verilməlidir — əks halda /test
+ * səhifəsi 403 alar. Boşdursa header ümumiyyətlə göndərilmir.
+ */
+const TEST_SEED_SECRET = import.meta.env.VITE_TEST_SEED_SECRET;
+
+const testHeaders: HeadersInit | undefined = TEST_SEED_SECRET
+  ? { 'X-Test-Secret': TEST_SEED_SECRET }
+  : undefined;
+
 export const testApi = {
-  status: () => get<SeedStatus>('/api/test/status'),
-  seed: () => post<SeedResult>('/api/test/seed'),
+  status: () => get<SeedStatus>('/api/test/status', testHeaders),
+  seed: () => post<SeedResult>('/api/test/seed', undefined, testHeaders),
 };
 
 export const learnerApi = {

@@ -102,10 +102,10 @@ export interface LearnerStats {
   pending: number;
 }
 
+/** MED-03 (pentest hesabatı): backend daxili UUID-ni artıq qaytarmır. */
 export interface LearnerLookup {
   found: boolean;
   source?: 'user' | 'certificate';
-  id?: string | null;
   name?: string;
   surname?: string;
   email: string;
